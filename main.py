@@ -1,5 +1,4 @@
-from datetime import datetime, date
-import json
+from datetime import datetime
 import os
 
 from dotenv import load_dotenv
