@@ -15,7 +15,7 @@ if __name__ == "__main__":
         os.environ["FINTS_BLZ"],
         os.environ["FINTS_LOGIN"],
         os.environ.get("FINTS_PIN", getpass("PIN: ")),
-        "https://hbci-pintan.gad.de/cgi-bin/hbciservlet",
+        os.environ["FINTS_ENDPOINT"],
         product_id=os.environ.get("FINTS_PRODUCT_ID", None),
     )
     minimal_interactive_cli_bootstrap(fints_client)
