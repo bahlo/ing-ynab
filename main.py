@@ -7,26 +7,24 @@ import requests
 
 BASE_URL = 'https://api.youneedabudget.com/v1'
 
-# Helper function to encode datetime.date{,time} in JSON
-def default(o):
-    if isinstance(o, (date, datetime)):
-        return o.isoformat()
-
 if __name__ == '__main__':
     load_dotenv()
+    import_transactions([
+        {
+            'account_id': os.environ['YNAB_ACCOUNT_ID'],
+            'date': datetime.now().isoformat(),
+            'amount': 13370,
+            'cleared': 'cleared',
+            'memo': 'hello from python',
+        },
+    ])
+    print(r.json())
 
+
+def import_transactions(transactions):
     headers = {'Authorization': "Bearer "+os.environ['YNAB_ACCESS_TOKEN']}
     payload = {
-        'transactions': [
-            {
-                'date': datetime.now(),
-                'amount': 13.37,
-                'cleared': 'cleared',
-                'memo': 'hello from python',
-            },
-        ],
+        'transactions': transactions,
     }
-    json_payload = json.dumps(payload, default=default)
-    print(json_payload)
-    r = requests.post(BASE_URL + '/budgets/'+os.environ['YNAB_BUDGET_ID']+'/transactions', data=json_payload, headers=headers)
-    print(r.json())
+    path = '/budgets/'+os.environ['YNAB_BUDGET_ID']+'/transactions/bulk'
+    r = requests.post(BASE_URL + path, json=payload, headers=headers)
