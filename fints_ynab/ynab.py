@@ -1,3 +1,5 @@
+"""The YNAB module holds code to interact with the YNAB API (v1).
+"""
 import os
 import requests
 
@@ -5,7 +7,10 @@ BASE_URL = "https://api.youneedabudget.com/v1"
 
 
 def import_transactions(transactions):
-    # Import the transaction into YNAB, returns an array with transaction ids.
+    """Import the transaction into YNAB, returns an array with transaction ids.
+
+    :param transactions: An array of transactions.
+    """
     headers = {"Authorization": "Bearer " + os.environ["YNAB_ACCESS_TOKEN"]}
     payload = {
         "transactions": transactions,

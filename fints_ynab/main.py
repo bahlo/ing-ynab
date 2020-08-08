@@ -1,11 +1,13 @@
-from datetime import datetime
+"""fints_ynab is a simple tool to add data from German banks to YNAB via FinTS.
+"""
+import logging
+import os
+from getpass import getpass
 from dotenv import load_dotenv
 from fints.client import FinTS3PinTanClient
 from fints.utils import minimal_interactive_cli_bootstrap
-from getpass import getpass
-import logging
-import os
-import ynab
+
+# import ynab
 
 if __name__ == "__main__":
     load_dotenv()
