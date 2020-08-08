@@ -1,19 +1,29 @@
 from datetime import datetime
-import os
 from dotenv import load_dotenv
+from fints.client import FinTS3PinTanClient
+from fints.utils import minimal_interactive_cli_bootstrap
+from getpass import getpass
+import logging
+import os
 import ynab
 
 if __name__ == "__main__":
     load_dotenv()
-    imported_transaction_ids = ynab.import_transactions(
-        [
-            {
-                "account_id": os.environ["YNAB_ACCOUNT_ID"],
-                "date": datetime.now().isoformat(),
-                "amount": 13370,
-                "cleared": "cleared",
-                "memo": "hello from python",
-            },
-        ]
+    logging.basicConfig(level=logging.DEBUG)
+
+    fints_client = FinTS3PinTanClient(
+        os.environ["FINTS_BLZ"],
+        os.environ["FINTS_LOGIN"],
+        os.environ.get("FINTS_PIN", getpass("PIN: ")),
+        "https://hbci-pintan.gad.de/cgi-bin/hbciservlet",
+        product_id=os.environ.get("FINTS_PRODUCT_ID", None),
     )
-    print(imported_transaction_ids)
+    minimal_interactive_cli_bootstrap(fints_client)
+    with fints_client:
+        if fints_client.init_tan_response:
+            print("A TAN is required", fints_client.init_tan_response.challenge)
+            tan = input("Please enter TAN:")
+            fints_client.send_tan(fints_client.init_tan_response, tan)
+
+        print(fints_client.get_sepa_accounts())
+
