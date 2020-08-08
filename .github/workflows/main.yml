@@ -14,5 +14,9 @@ jobs:
     - uses: actions/setup-python@v2
       with:
         python-version: '3.x'
-    - uses: actions/setup-python@v2
-    - uses: psf/black@stable
+    - run: | 
+        pip install pylint pycodestyle black
+        pylint .
+        pycodestyle .
+        black --check .
+
