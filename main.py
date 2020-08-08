@@ -5,7 +5,7 @@ import ynab
 
 if __name__ == "__main__":
     load_dotenv()
-    ynab.import_transactions(
+    imported_transaction_ids = ynab.import_transactions(
         [
             {
                 "account_id": os.environ["YNAB_ACCOUNT_ID"],
@@ -16,3 +16,4 @@ if __name__ == "__main__":
             },
         ]
     )
+    print(imported_transaction_ids)
