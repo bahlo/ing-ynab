@@ -1,6 +1,6 @@
 [[source]]
-name = "fints_ynab"
-url = "https://github.com/bahlo/fints-ynab"
+name = "pypi"
+url = "https://pypi.python.org/simple"
 verify_ssl = true
 
 [dev-packages]

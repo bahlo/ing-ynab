@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "e9f7cb22ab90e2ba3f79e81b3e89923a51c3854784a9b9545e58f9e21254c6a7"
+            "sha256": "c35d7fdaed672117aa0e18c8a20d48075a5ecd61bc02445c506bff2af5d1dd07"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -10,7 +10,7 @@
         "sources": [
             {
                 "name": "pypi",
-                "url": "https://pypi.org/simple",
+                "url": "https://pypi.python.org/simple",
                 "verify_ssl": true
             }
         ]
