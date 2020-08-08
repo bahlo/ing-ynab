@@ -1,5 +1,5 @@
 [[source]]
-name = "fints-ynab"
+name = "fints_ynab"
 url = "https://github.com/bahlo/fints-ynab"
 verify_ssl = true
 
