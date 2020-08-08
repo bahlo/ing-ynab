@@ -11,6 +11,6 @@ def import_transactions(transactions):
         "transactions": transactions,
     }
     path = "/budgets/" + os.environ["YNAB_BUDGET_ID"] + "/transactions"
-    r = requests.post(BASE_URL + path, json=payload, headers=headers)
-    r.raise_for_status()
-    return r.json()["data"]["transaction_ids"]
+    response = requests.post(BASE_URL + path, json=payload, headers=headers)
+    response.raise_for_status()
+    return response.json()["data"]["transaction_ids"]
