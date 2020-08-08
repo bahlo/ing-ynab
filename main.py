@@ -9,7 +9,7 @@ from fints.client import FinTS3PinTanClient
 from fints.utils import minimal_interactive_cli_bootstrap
 import requests
 
-BASE_URL = "https://api.youneedabudget.com/v1"
+YNAB_BASE_URL = "https://api.youneedabudget.com/v1"
 
 if __name__ == "__main__":
     load_dotenv()
@@ -48,6 +48,6 @@ def import_transactions(transactions):
         "transactions": transactions,
     }
     path = "/budgets/" + os.environ["YNAB_BUDGET_ID"] + "/transactions"
-    response = requests.post(BASE_URL + path, json=payload, headers=headers)
+    response = requests.post(YNAB_BASE_URL + path, json=payload, headers=headers)
     response.raise_for_status()
     return response.json()["data"]["transaction_ids"]
