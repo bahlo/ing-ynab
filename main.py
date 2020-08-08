@@ -2,15 +2,19 @@ from datetime import datetime, date
 import json
 import os
 
+from dotenv import load_dotenv
 import requests
 
 BASE_URL = 'https://api.youneedabudget.com/v1'
 
+# Helper function to encode datetime.date{,time} in JSON
 def default(o):
     if isinstance(o, (date, datetime)):
         return o.isoformat()
 
 if __name__ == '__main__':
+    load_dotenv()
+
     headers = {'Authorization': "Bearer "+os.environ['YNAB_ACCESS_TOKEN']}
     payload = {
         'transactions': [

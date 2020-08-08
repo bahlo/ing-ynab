@@ -8,6 +8,7 @@ verify_ssl = true
 [packages]
 requests = "*"
 fints = "*"
+python-dotenv = "*"
 
 [requires]
 python_version = "3.8"
