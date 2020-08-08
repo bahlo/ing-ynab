@@ -21,9 +21,8 @@ if __name__ == "__main__":
     minimal_interactive_cli_bootstrap(fints_client)
     with fints_client:
         if fints_client.init_tan_response:
-            print("A TAN is required", fints_client.init_tan_response.challenge)
+            print("TAN required:", fints_client.init_tan_response.challenge)
             tan = input("Please enter TAN:")
             fints_client.send_tan(fints_client.init_tan_response, tan)
 
         print(fints_client.get_sepa_accounts())
-
