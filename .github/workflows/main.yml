@@ -16,7 +16,7 @@ jobs:
         python-version: '3.x'
     - run: | 
         pip install pylint pycodestyle black
-        pylint .
-        pycodestyle .
-        black --check .
+        pylint ./fints_ynab/
+        pycodestyle ./fints_ynab/
+        black --check ./fints_ynab/
 
