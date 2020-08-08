@@ -1,5 +1,6 @@
 """fints_ynab is a simple tool to add data from German banks to YNAB via FinTS.
 """
+from datetime import datetime
 import logging
 import os
 from getpass import getpass
@@ -27,4 +28,10 @@ if __name__ == "__main__":
             tan = input("Please enter TAN:")
             fints_client.send_tan(fints_client.init_tan_response, tan)
 
-        print(fints_client.get_sepa_accounts())
+        accounts = fints_client.get_sepa_accounts()
+        transactions = fints_client.get_transactions(
+            accounts[0], start_date=datetime.now()
+        )
+        print(transactions)
+        # TODO: Convert transactions to a format YNAB will accept.
+        # TODO: ynab.import_transactions(transactions)
