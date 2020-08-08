@@ -13,7 +13,6 @@ YNAB_BASE_URL = "https://api.youneedabudget.com/v1"
 
 if __name__ == "__main__":
     load_dotenv()
-    logging.basicConfig(level=logging.DEBUG)
 
     fints_client = FinTS3PinTanClient(
         os.environ["FINTS_BLZ"],
@@ -22,20 +21,19 @@ if __name__ == "__main__":
         os.environ["FINTS_ENDPOINT"],
         product_id=os.environ.get("FINTS_PRODUCT_ID", None),
     )
-    minimal_interactive_cli_bootstrap(fints_client)
-    with fints_client:
-        if fints_client.init_tan_response:
-            print("TAN required:", fints_client.init_tan_response.challenge)
-            tan = input("Please enter TAN:")
-            fints_client.send_tan(fints_client.init_tan_response, tan)
+    if fints_client.init_tan_response:
+        print("TAN required:", fints_client.init_tan_response.challenge)
+        tan = input("Please enter TAN:")
+        fints_client.send_tan(fints_client.init_tan_response, tan)
 
-        accounts = fints_client.get_sepa_accounts()
-        transactions = fints_client.get_transactions(
-            accounts[0], start_date=datetime.now()
-        )
-        print(transactions)
-        # TODO: Convert transactions to a format YNAB will accept.
-        # TODO: ynab.import_transactions(transactions)
+    accounts = fints_client.get_sepa_accounts()
+    transactions = fints_client.get_transactions(
+        accounts[2], start_date=datetime.fromisoformat("2020-08-01")
+    )
+    for transaction in transactions:
+        print(transaction.data)
+    # TODO: Convert transactions to a format YNAB will accept.
+    # TODO: ynab.import_transactions(transactions)
 
 
 def import_transactions(transactions):
