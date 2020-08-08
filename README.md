@@ -1,4 +1,4 @@
-# fints-ynab
+# fints_ynab ![build](https://github.com/bahlo/fints_ynab/workflows/build/badge.svg)
 
 Import your bank statements via FinTS into YNAB.
 
