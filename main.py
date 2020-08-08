@@ -7,8 +7,9 @@ from getpass import getpass
 from dotenv import load_dotenv
 from fints.client import FinTS3PinTanClient
 from fints.utils import minimal_interactive_cli_bootstrap
+import requests
 
-# import ynab
+BASE_URL = "https://api.youneedabudget.com/v1"
 
 if __name__ == "__main__":
     load_dotenv()
@@ -35,3 +36,18 @@ if __name__ == "__main__":
         print(transactions)
         # TODO: Convert transactions to a format YNAB will accept.
         # TODO: ynab.import_transactions(transactions)
+
+
+def import_transactions(transactions):
+    """Import the transaction into YNAB, returns an array with transaction ids.
+
+    :param transactions: An array of transactions.
+    """
+    headers = {"Authorization": "Bearer " + os.environ["YNAB_ACCESS_TOKEN"]}
+    payload = {
+        "transactions": transactions,
+    }
+    path = "/budgets/" + os.environ["YNAB_BUDGET_ID"] + "/transactions"
+    response = requests.post(BASE_URL + path, json=payload, headers=headers)
+    response.raise_for_status()
+    return response.json()["data"]["transaction_ids"]
