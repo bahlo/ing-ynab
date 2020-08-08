@@ -15,8 +15,7 @@ jobs:
       with:
         python-version: '3.x'
     - run: | 
-        pip install pylint pycodestyle black
+        pip install pylint black
         pylint .
-        pycodestyle .
         black --check .
 
