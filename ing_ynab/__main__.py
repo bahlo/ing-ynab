@@ -1,6 +1,7 @@
 """ing_ynab is a simple tool to add data from German banks to YNAB via FinTS.
 """
 from datetime import datetime
+from time import sleep
 from decimal import Decimal
 import logging
 import os
@@ -47,15 +48,43 @@ def import_transactions(transactions, access_token=None, budget_id=None):
     return response.json()["data"]["transaction_ids"]
 
 
+def ing_to_ynab(
+    fints_client=None,
+    fints_account=None,
+    start_date=None,
+    ynab_account_id=None,
+    ynab_access_token=None,
+    ynab_budget_id=None,
+    debug=None,
+):
+    """This code is called in a predefined interval to add new ing transactions into ynab.
+    """
+    transactions = fints_client.get_transactions(
+        fints_account, start_date=datetime.fromisoformat(start_date)
+    )
+
+    # Transform FinTS transactions to YNAB transactions.
+    ynab_transactions = transform_transactions(transactions, account_id=ynab_account_id)
+
+    # Print or import the transformed transactions.
+    if debug:
+        for transaction in ynab_transactions:
+            print(transaction)
+    else:
+        import_transactions(
+            ynab_transactions, access_token=ynab_access_token, budget_id=ynab_budget_id,
+        )
+
+
 if __name__ == "__main__":
     load_dotenv()
 
     # Initialize FinTS.
     fints_client = FinTS3PinTanClient(
-        "50010517",
+        "50010517",  # BLZ
         os.environ["FINTS_LOGIN"],
         os.environ.get("FINTS_PIN", getpass("PIN: ")),
-        "https://fints.ing-diba.de/fints/",
+        "https://fints.ing-diba.de/fints/",  # Endpoint
         product_id=os.environ.get("FINTS_PRODUCT_ID", None),
     )
     if fints_client.init_tan_response:
@@ -67,32 +96,27 @@ if __name__ == "__main__":
     accounts = fints_client.get_sepa_accounts()
 
     # Find selected one.
-    selected_acocunt = None
+    selected_account = None
     for account in accounts:
         if account.iban == os.environ["FINTS_IBAN"]:
-            selected_acocunt = account
+            selected_account = account
             break
-    if selected_acocunt == None:
+    if selected_account == None:
         print("Could not find account, is the IBAN correct?")
+        print("Available accounts: %s" % accounts)
         exit(1)
 
-    start_date = os.environ.get("START_DATE", datetime.now())
-    transactions = fints_client.get_transactions(
-        selected_acocunt, start_date=datetime.fromisoformat(start_date)
-    )
+    interval = int(os.environ.get("SLEEP_INTERVAL", "300"))
 
-    # Transform FinTS transactions to YNAB transactions.
-    ynab_transactions = transform_transactions(
-        transactions, account_id=os.environ["YNAB_ACCOUNT_ID"]
-    )
-
-    # Print or import the transformed transactions.
-    if os.environ.get("DEBUG", "") == "1":
-        for transaction in ynab_transactions:
-            print(transaction)
-    else:
-        import_transactions(
-            ynab_transactions,
-            access_token=os.environ["YNAB_ACCESS_TOKEN"],
-            budget_id=os.environ["YNAB_BUDGET_ID"],
+    while True:
+        ing_to_ynab(
+            fints_client=fints_client,
+            fints_account=selected_account,
+            ynab_access_token=os.environ["YNAB_ACCESS_TOKEN"],
+            ynab_account_id=os.environ["YNAB_ACCOUNT_ID"],
+            ynab_budget_id=os.environ["YNAB_BUDGET_ID"],
+            start_date=os.environ.get("START_DATE", datetime.now()),
+            debug=os.environ.get("DEBUG") == "1",
         )
+
+        sleep(interval)
