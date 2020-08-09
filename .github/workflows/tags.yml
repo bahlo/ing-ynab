@@ -16,8 +16,6 @@ jobs:
       run: docker login docker.pkg.github.com -u bahlo -p "${{ secrets.GITHUB_TOKEN }}"
     - name: Build and publish
       run: |
-        echo "${{ github.ref }}"
         export TAG=$(echo "${{ github.ref }}" | sed 's/^refs\/tags\/v//g')
-        echo "$TAG"
         docker build -t docker.pkg.github.com/bahlo/ing_ynab/ing_ynab:$TAG .
         docker push docker.pkg.github.com/bahlo/ing_ynab/ing_ynab:$TAG
