@@ -25,7 +25,8 @@ def transform_transactions(transactions, account_id=None):
                 "amount": int(amount_decimal),
                 "payee_name": data["applicant_name"],
                 "cleared": "cleared",
-            }
+                "memo": data["purpose"],
+            },
         )
     return transformed
 
