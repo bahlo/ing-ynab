@@ -20,7 +20,7 @@ jobs:
     - name: Install and run linters
       run: | 
         pip install pylint black pipenv
-        pipenv install
+        pipenv install --dev
         pipenv run pylint ing_ynab
         pipenv run black --check ing_ynab
 
