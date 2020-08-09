@@ -50,6 +50,7 @@ def import_transactions(transactions, access_token=None, budget_id=None):
 if __name__ == "__main__":
     load_dotenv()
 
+    # Initialize FinTS.
     fints_client = FinTS3PinTanClient(
         os.environ["FINTS_BLZ"],
         os.environ["FINTS_LOGIN"],
@@ -62,13 +63,29 @@ if __name__ == "__main__":
         tan = input("Please enter TAN:")
         fints_client.send_tan(fints_client.init_tan_response, tan)
 
+    # Get sepa accounts.
     accounts = fints_client.get_sepa_accounts()
+
+    # Find selected one.
+    selected_acocunt = None
+    for account in accounts:
+        if account.iban == os.environ["FINTS_IBAN"]:
+            selected_acocunt = account
+            break
+    if selected_acocunt == None:
+        print("Could not find account, is the IBAN correct?")
+        exit(1)
+
     transactions = fints_client.get_transactions(
-        accounts[2], start_date=datetime.fromisoformat("2020-08-08")
+        selected_acocunt, start_date=datetime.fromisoformat("2020-08-08")
     )
+
+    # Transform FinTS transactions to YNAB transactions.
     ynab_transactions = transform_transactions(
         transactions, account_id=os.environ["YNAB_ACCOUNT_ID"]
     )
+
+    # Print or import the transformed transactions.
     if os.environ.get("DEBUG", "") == "1":
         for transaction in ynab_transactions:
             print(transaction)
