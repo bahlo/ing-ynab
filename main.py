@@ -1,4 +1,4 @@
-"""fints_ynab is a simple tool to add data from German banks to YNAB via FinTS.
+"""ing-ynab is a simple tool to add data from German banks to YNAB via FinTS.
 """
 from datetime import datetime
 from decimal import Decimal
@@ -52,10 +52,10 @@ if __name__ == "__main__":
 
     # Initialize FinTS.
     fints_client = FinTS3PinTanClient(
-        os.environ["FINTS_BLZ"],
+        "50010517",
         os.environ["FINTS_LOGIN"],
         os.environ.get("FINTS_PIN", getpass("PIN: ")),
-        os.environ["FINTS_ENDPOINT"],
+        "https://fints.ing-diba.de/fints/",
         product_id=os.environ.get("FINTS_PRODUCT_ID", None),
     )
     if fints_client.init_tan_response:
