@@ -16,6 +16,6 @@ jobs:
         python-version: '3.x'
     - run: | 
         pip install pylint black
-        pylint ./ing_ynab/
-        black --check ./ing_ynab/
+        pylint ing_ynab
+        black --check ing_ynab
 
