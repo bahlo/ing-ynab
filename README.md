@@ -49,7 +49,8 @@ ing_ynab:
   stdin_open: true
 ```
 After starting the stack with `docker-compose up -d`, run 
-`docker-compose attach $container` to attach to the container.
+`docker attach $container_id` to attach to the container. Note that the prompt
+for the pin might be hidden, so you have to enter the FinTS PIN directly.
 
 ## Configuration
 
