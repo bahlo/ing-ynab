@@ -8,14 +8,19 @@ on:
 
 jobs:
   lint:
+    name: Lint
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-python@v2
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Setup
+      uses: actions/setup-python@v2
       with:
         python-version: '3.x'
-    - run: | 
-        pip install pylint black
+    - name: Install and run linters
+      run: | 
+        pip install pylint black pipenv
+        pipenv install
         pylint ing_ynab
         black --check ing_ynab
 
