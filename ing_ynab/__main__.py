@@ -45,7 +45,6 @@ def import_transactions(transactions, access_token=None, budget_id=None):
     }
     path = "/budgets/" + budget_id + "/transactions"
     response = requests.post(YNAB_BASE_URL + path, json=payload, headers=headers)
-    print(response.json())
     response.raise_for_status()
     return response.json()["data"]["transaction_ids"]
 
@@ -68,11 +67,12 @@ def ing_to_ynab(fints_client, fints_account, debug=False):
         for transaction in ynab_transactions:
             print(transaction)
     else:
-        import_transactions(
+        imported = import_transactions(
             ynab_transactions,
             access_token=os.environ["YNAB_ACCESS_TOKEN"],
             budget_id=os.environ["YNAB_BUDGET_ID"],
         )
+        print("Imported %d new transaction(s)" % len(imported))
 
 
 def main():
