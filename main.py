@@ -76,8 +76,9 @@ if __name__ == "__main__":
         print("Could not find account, is the IBAN correct?")
         exit(1)
 
+    start_date = os.environ.get("START_DATE", datetime.now())
     transactions = fints_client.get_transactions(
-        selected_acocunt, start_date=datetime.fromisoformat("2020-08-08")
+        selected_acocunt, start_date=datetime.fromisoformat(start_date)
     )
 
     # Transform FinTS transactions to YNAB transactions.
