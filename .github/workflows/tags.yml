@@ -18,5 +18,6 @@ jobs:
       run: |
         echo "${{ github.ref }}"
         export TAG=$(echo "${{ github.ref }}" | sed 's/^refs\/tags\/v//g')
-        docker build -t docker.pkg.github.com/bahlo/ing_ynab/ing_ynab:$TAG
+        echo "$TAG"
+        docker build -t docker.pkg.github.com/bahlo/ing_ynab/ing_ynab:$TAG .
         docker push docker.pkg.github.com/bahlo/ing_ynab/ing_ynab:$TAG
