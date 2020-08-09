@@ -3,6 +3,7 @@
 from datetime import datetime
 from time import sleep
 from decimal import Decimal
+from hashlib import sha256
 import logging
 import os
 import sys
@@ -12,6 +13,19 @@ from fints.client import FinTS3PinTanClient
 import requests
 
 YNAB_BASE_URL = "https://api.youneedabudget.com/v1"
+
+
+def hash_transaction(transaction):
+    """Generate a hash for the transaction to make them identifiable.
+    """
+    data = transaction.data
+    payload = "%s:%s:%s:%s" % (
+        data["date"],
+        data["applicant_name"],
+        data["purpose"],
+        data["amount"],
+    )
+    return sha256(payload.encode("utf-8")).hexdigest()
 
 
 def transform_transactions(transactions, account_id=None):
@@ -54,16 +68,31 @@ def ing_to_ynab(fints_client, fints_account, debug=False):
     """
     # Try to read from state
     start_date = None
+    last_hash = None
     try:
         with open("state", "r") as state_file:
             contents = state_file.read().splitlines()
             start_date = datetime.fromisoformat(contents[0])
+            last_hash = contents[1]
     except:  # pylint: disable=bare-except
-        start_date = os.environ.get("START_DATE", datetime.now())
+        start_date_env = os.environ.get("START_DATE")
+        if start_date_env is not None:
+            start_date = datetime.fromisoformat(start_date_env)
+        else:
+            start_date = datetime.now()
 
-    transactions = fints_client.get_transactions(
-        fints_account, start_date=datetime.fromisoformat(start_date)
-    )
+    transactions = fints_client.get_transactions(fints_account, start_date=start_date)
+
+    # Figure out where to start by finding the last transaction.
+    array_start = 0
+    for i, transaction in enumerate(transactions):
+        if hash_transaction(transaction) == last_hash:
+            array_start = i + 1
+    transactions = transactions[array_start:]
+
+    if len(transactions) == 0:
+        print("No new transactions found")
+        return
 
     # Transform FinTS transactions to YNAB transactions.
     ynab_transactions = transform_transactions(
@@ -83,7 +112,10 @@ def ing_to_ynab(fints_client, fints_account, debug=False):
         print("Imported %d new transaction(s)" % len(imported))
 
     with open("state", "w") as state_file:
-        state_file.write("%s" % datetime.now().strftime("%Y-%m-%d"))
+        state_file.write(
+            "%s\n%s"
+            % (datetime.now().strftime("%Y-%m-%d"), hash_transaction(transactions[0]))
+        )
 
 
 def main():
@@ -127,6 +159,7 @@ def main():
     while True:
         ing_to_ynab(fints_client, selected_account, debug=debug)
 
+        print("Sleeping for %d seconds" % interval)
         sleep(interval)
 
 
