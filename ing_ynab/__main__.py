@@ -58,7 +58,7 @@ def ing_to_ynab(fints_client, fints_account, debug=False):
         with open("state", "r") as state_file:
             contents = state_file.read().splitlines()
             start_date = datetime.fromisoformat(contents[0])
-    except:
+    except:  # pylint: disable=bare-except
         start_date = os.environ.get("START_DATE", datetime.now())
 
     transactions = fints_client.get_transactions(
