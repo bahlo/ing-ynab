@@ -1,6 +1,7 @@
 """fints_ynab is a simple tool to add data from German banks to YNAB via FinTS.
 """
 from datetime import datetime
+from decimal import Decimal
 import logging
 import os
 from getpass import getpass
@@ -10,6 +11,38 @@ from fints.utils import minimal_interactive_cli_bootstrap
 import requests
 
 YNAB_BASE_URL = "https://api.youneedabudget.com/v1"
+
+
+def transform_transactions(transactions):
+    transformed = []
+    for transaction in transactions:
+        data = transaction.data
+        amount_decimal = data["amount"].amount * Decimal("1000.0")
+        transformed.append(
+            {
+                "date": data["date"].isoformat(),
+                "amount": int(amount_decimal),
+                "payee_name": data["applicant_name"],
+                "cleared": "cleared",
+            }
+        )
+    return transformed
+
+
+def import_transactions(transactions):
+    """Import the transaction into YNAB, returns an array with transaction ids.
+
+    :param transactions: An array of transactions.
+    """
+    headers = {"Authorization": "Bearer " + os.environ["YNAB_ACCESS_TOKEN"]}
+    payload = {
+        "transactions": transactions,
+    }
+    path = "/budgets/" + os.environ["YNAB_BUDGET_ID"] + "/transactions"
+    response = requests.post(YNAB_BASE_URL + path, json=payload, headers=headers)
+    response.raise_for_status()
+    return response.json()["data"]["transaction_ids"]
+
 
 if __name__ == "__main__":
     load_dotenv()
@@ -28,24 +61,11 @@ if __name__ == "__main__":
 
     accounts = fints_client.get_sepa_accounts()
     transactions = fints_client.get_transactions(
-        accounts[2], start_date=datetime.fromisoformat("2020-08-01")
+        accounts[2], start_date=datetime.fromisoformat("2020-08-08")
     )
-    for transaction in transactions:
-        print(transaction.data)
-    # TODO: Convert transactions to a format YNAB will accept.
-    # TODO: ynab.import_transactions(transactions)
-
-
-def import_transactions(transactions):
-    """Import the transaction into YNAB, returns an array with transaction ids.
-
-    :param transactions: An array of transactions.
-    """
-    headers = {"Authorization": "Bearer " + os.environ["YNAB_ACCESS_TOKEN"]}
-    payload = {
-        "transactions": transactions,
-    }
-    path = "/budgets/" + os.environ["YNAB_BUDGET_ID"] + "/transactions"
-    response = requests.post(YNAB_BASE_URL + path, json=payload, headers=headers)
-    response.raise_for_status()
-    return response.json()["data"]["transaction_ids"]
+    ynab_transactions = transform_transactions(transactions)
+    if os.environ.get("DEBUG", "") == "1":
+        for transaction in ynab_transactions:
+            print(transaction)
+    else:
+        import_transactions(ynab_transactions)
