@@ -1,4 +1,4 @@
-"""ing-ynab is a simple tool to add data from German banks to YNAB via FinTS.
+"""ing_ynab is a simple tool to add data from German banks to YNAB via FinTS.
 """
 from datetime import datetime
 from decimal import Decimal
