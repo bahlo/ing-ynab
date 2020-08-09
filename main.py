@@ -13,13 +13,14 @@ import requests
 YNAB_BASE_URL = "https://api.youneedabudget.com/v1"
 
 
-def transform_transactions(transactions):
+def transform_transactions(transactions, account_id=None):
     transformed = []
     for transaction in transactions:
         data = transaction.data
         amount_decimal = data["amount"].amount * Decimal("1000.0")
         transformed.append(
             {
+                "account_id": account_id,
                 "date": data["date"].isoformat(),
                 "amount": int(amount_decimal),
                 "payee_name": data["applicant_name"],
@@ -29,17 +30,18 @@ def transform_transactions(transactions):
     return transformed
 
 
-def import_transactions(transactions):
+def import_transactions(transactions, access_token=None, budget_id=None):
     """Import the transaction into YNAB, returns an array with transaction ids.
 
     :param transactions: An array of transactions.
     """
-    headers = {"Authorization": "Bearer " + os.environ["YNAB_ACCESS_TOKEN"]}
+    headers = {"Authorization": "Bearer " + access_token}
     payload = {
         "transactions": transactions,
     }
-    path = "/budgets/" + os.environ["YNAB_BUDGET_ID"] + "/transactions"
+    path = "/budgets/" + budget_id + "/transactions"
     response = requests.post(YNAB_BASE_URL + path, json=payload, headers=headers)
+    print(response.json())
     response.raise_for_status()
     return response.json()["data"]["transaction_ids"]
 
@@ -63,9 +65,15 @@ if __name__ == "__main__":
     transactions = fints_client.get_transactions(
         accounts[2], start_date=datetime.fromisoformat("2020-08-08")
     )
-    ynab_transactions = transform_transactions(transactions)
+    ynab_transactions = transform_transactions(
+        transactions, account_id=os.environ["YNAB_ACCOUNT_ID"]
+    )
     if os.environ.get("DEBUG", "") == "1":
         for transaction in ynab_transactions:
             print(transaction)
     else:
-        import_transactions(ynab_transactions)
+        import_transactions(
+            ynab_transactions,
+            access_token=os.environ["YNAB_ACCESS_TOKEN"],
+            budget_id=os.environ["YNAB_BUDGET_ID"],
+        )
