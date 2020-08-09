@@ -106,7 +106,9 @@ def ing_to_ynab(fints_client, fints_account, debug=False):
     else:
         imported = import_transactions(
             ynab_transactions,
-            access_token=os.environ["YNAB_ACCESS_TOKEN"],
+            access_token=os.environ.get(
+                "YNAB_ACCESS_TOKEN", getpass("YNAB Access Token: ")
+            ),
             budget_id=os.environ["YNAB_BUDGET_ID"],
         )
         print("Imported %d new transaction(s)" % len(imported))
@@ -131,7 +133,7 @@ def main():
     fints_client = FinTS3PinTanClient(
         "50010517",  # BLZ
         os.environ["FINTS_LOGIN"],
-        os.environ.get("FINTS_PIN", getpass("PIN: ")),
+        os.environ.get("FINTS_PIN", getpass("FinTS Pin: ")),
         "https://fints.ing-diba.de/fints/",  # Endpoint
         product_id=os.environ.get("FINTS_PRODUCT_ID", None),
     )

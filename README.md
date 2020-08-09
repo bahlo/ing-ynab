@@ -26,6 +26,22 @@ one from the [python-fints](https://python-fints.readthedocs.io) library).
 
 We mount the `state` file to prevent duplicates.
 
+### Security
+
+If you don't want to mount your bank pin and/or your YNAB access token as it 
+can be read by inspecing the docker container or docker-compose file, you can 
+omit `YNAB_ACCESS_TOKEN` and `FINTS_PIN` and you'll be prompted on startup.
+This has the disadvantage that you need to enter them on every container 
+restart.
+For running with docker pass `-it`, for docker-compose you need these fields
+on the container:
+```yml
+  tty: true
+  stdin_open: true
+```
+After starting the stack with `docker-compose up -d`, run 
+`docker-compose attach $container` to attach to the container.
+
 ## Configuration
 
 The configuration is done via environment variables:
