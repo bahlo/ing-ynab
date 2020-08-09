@@ -13,18 +13,25 @@ one from the [python-fints](https://python-fints.readthedocs.io) library).
 
 ### Local
 
-1. `pip install pipenv` to install [pipenv](https://pipenv.pypa.io) 
-2. `pipenv shell` to spawn a new shell with your env
-3. `pipenv install` to install dependencies
-4. `cp .env.example .env` and customize fields
-5. `python ing_ynab`
+```sh
+$ pip install pipenv # to install pipenv (https://pipenv.pypa.io) 
+$ pipenv shell # to spawn a new shell with your env
+$ pipenv install # to install dependencies
+$ cp .env.example .env # and customize fields
+$ python ing_ynab # to run the app
+```
 
 ### Docker
 
-1. `cp .env.example .env` and customize fields
-2. `docker run -v $PWD/state:/app/state --env-file .env docker.pkg.github.com/bahlo/ing_ynab/ing_ynab:latest`
+```sh
+$ cp .env.example .env # and customize fields
+$ docker run \
+    -v $PWD/state:/app/state \
+    --env-file .env \
+    docker.pkg.github.com/bahlo/ing_ynab/ing_ynab:latest
+```
 
-We mount the `state` file to prevent duplicates.
+We mount the `state` file to prevent duplicate imports.
 
 ### Security
 
@@ -36,6 +43,8 @@ restart.
 For running with docker pass `-it`, for docker-compose you need these fields
 on the container:
 ```yml
+ing_ynab:
+  # ...
   tty: true
   stdin_open: true
 ```
