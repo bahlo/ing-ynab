@@ -28,7 +28,7 @@ def hash_transaction(transaction):
     return sha256(payload.encode("utf-8")).hexdigest()
 
 
-def transform_transactions(transactions, account_id=None):
+def transform_transactions(transactions, account_id=None, flag_color=None):
     """Transform the FinTS transactions into something the YNAB API understands.
     """
     transformed = []
@@ -43,6 +43,7 @@ def transform_transactions(transactions, account_id=None):
                 "payee_name": data["applicant_name"],
                 "cleared": "cleared",
                 "memo": data["purpose"],
+                "flag_color": flag_color,
             },
         )
     return transformed
@@ -96,7 +97,9 @@ def ing_to_ynab(fints_client, fints_account, debug=False):
 
     # Transform FinTS transactions to YNAB transactions.
     ynab_transactions = transform_transactions(
-        transactions, account_id=os.environ["YNAB_ACCOUNT_ID"]
+        transactions,
+        account_id=os.environ["YNAB_ACCOUNT_ID"],
+        flag_color=os.environ.get("YNAB_FLAG_COLOR"),
     )
 
     # Print or import the transformed transactions.
