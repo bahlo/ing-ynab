@@ -5,16 +5,18 @@ from time import sleep
 from decimal import Decimal
 import logging
 import os
+import sys
 from getpass import getpass
 from dotenv import load_dotenv
 from fints.client import FinTS3PinTanClient
-from fints.utils import minimal_interactive_cli_bootstrap
 import requests
 
 YNAB_BASE_URL = "https://api.youneedabudget.com/v1"
 
 
 def transform_transactions(transactions, account_id=None):
+    """Transform the FinTS transactions into something the YNAB API understands.
+    """
     transformed = []
     for transaction in transactions:
         data = transaction.data
@@ -48,23 +50,18 @@ def import_transactions(transactions, access_token=None, budget_id=None):
     return response.json()["data"]["transaction_ids"]
 
 
-def ing_to_ynab(
-    fints_client=None,
-    fints_account=None,
-    start_date=None,
-    ynab_account_id=None,
-    ynab_access_token=None,
-    ynab_budget_id=None,
-    debug=None,
-):
+def ing_to_ynab(fints_client, fints_account, debug=False):
     """This code is called in a predefined interval to add new ing transactions into ynab.
     """
+    start_date = os.environ.get("START_DATE", datetime.now())
     transactions = fints_client.get_transactions(
         fints_account, start_date=datetime.fromisoformat(start_date)
     )
 
     # Transform FinTS transactions to YNAB transactions.
-    ynab_transactions = transform_transactions(transactions, account_id=ynab_account_id)
+    ynab_transactions = transform_transactions(
+        transactions, account_id=os.environ["YNAB_ACCOUNT_ID"]
+    )
 
     # Print or import the transformed transactions.
     if debug:
@@ -72,12 +69,20 @@ def ing_to_ynab(
             print(transaction)
     else:
         import_transactions(
-            ynab_transactions, access_token=ynab_access_token, budget_id=ynab_budget_id,
+            ynab_transactions,
+            access_token=os.environ["YNAB_ACCESS_TOKEN"],
+            budget_id=os.environ["YNAB_BUDGET_ID"],
         )
 
 
-if __name__ == "__main__":
+def main():
+    """This is the main function
+    """
     load_dotenv()
+
+    debug = os.environ.get("DEBUG") == "1"
+    if debug:
+        logging.basicConfig(level=logging.DEBUG)
 
     # Initialize FinTS.
     fints_client = FinTS3PinTanClient(
@@ -101,22 +106,18 @@ if __name__ == "__main__":
         if account.iban == os.environ["FINTS_IBAN"]:
             selected_account = account
             break
-    if selected_account == None:
+    if selected_account is None:
         print("Could not find account, is the IBAN correct?")
         print("Available accounts: %s" % accounts)
-        exit(1)
+        sys.exit(1)
 
     interval = int(os.environ.get("SLEEP_INTERVAL", "300"))
 
     while True:
-        ing_to_ynab(
-            fints_client=fints_client,
-            fints_account=selected_account,
-            ynab_access_token=os.environ["YNAB_ACCESS_TOKEN"],
-            ynab_account_id=os.environ["YNAB_ACCOUNT_ID"],
-            ynab_budget_id=os.environ["YNAB_BUDGET_ID"],
-            start_date=os.environ.get("START_DATE", datetime.now()),
-            debug=os.environ.get("DEBUG") == "1",
-        )
+        ing_to_ynab(fints_client, selected_account, debug=debug)
 
         sleep(interval)
+
+
+if __name__ == "__main__":
+    main()
