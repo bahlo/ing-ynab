@@ -21,6 +21,6 @@ jobs:
       run: | 
         pip install pylint black pipenv
         pipenv install
-        pylint ing_ynab
-        black --check ing_ynab
+        pipenv run pylint ing_ynab
+        pipenv run black --check ing_ynab
 
