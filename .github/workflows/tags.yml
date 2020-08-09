@@ -14,10 +14,9 @@ jobs:
       uses: actions/checkout@v1
     - name: Login
       run: docker login docker.pkg.github.com -u bahlo -p "${{ secrets.GITHUB_TOKEN }}"
-    - name: Build
+    - name: Build and publish
       run: |
         export GITHUB_REF=${{ github.ref }} # refs/tags/v0.2.0
         export TAG=$(echo $GITHUB_REF | sed 's/^refs\/tags\/v//g')
-        docker build -t docker.pkg.github.com/bahlo/ing_ynab/ing_ynab:${{ github.ref }} .
-    - name: Publish
-      run: docker push docker.pkg.github.com/bahlo/ing_ynab/ing_ynab:${{ github.ref }}
+        docker build -t docker.pkg.github.com/bahlo/ing_ynab/ing_ynab:$TAG .
+        docker push docker.pkg.github.com/bahlo/ing_ynab/ing_ynab:$TAG
