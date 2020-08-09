@@ -49,22 +49,22 @@ def transform_transactions(transactions, account_id=None, flag_color=None):
     return transformed
 
 
-def import_transactions(transactions, access_token=None, budget_id=None):
+def import_transactions(ynab_transactions, ynab_access_token=None, ynab_budget_id=None):
     """Import the transaction into YNAB, returns an array with transaction ids.
 
     :param transactions: An array of transactions.
     """
-    headers = {"Authorization": "Bearer " + access_token}
+    headers = {"Authorization": "Bearer " + ynab_access_token}
     payload = {
-        "transactions": transactions,
+        "transactions": ynab_transactions,
     }
-    path = "/budgets/" + budget_id + "/transactions"
+    path = "/budgets/" + ynab_budget_id + "/transactions"
     response = requests.post(YNAB_BASE_URL + path, json=payload, headers=headers)
     response.raise_for_status()
     return response.json()["data"]["transaction_ids"]
 
 
-def ing_to_ynab(fints_client, fints_account, debug=False):
+def ing_to_ynab(fints_client, fints_account, ynab_access_token, debug=False):
     """This code is called in a predefined interval to add new ing transactions into ynab.
     """
     # Try to read from state
@@ -109,10 +109,8 @@ def ing_to_ynab(fints_client, fints_account, debug=False):
     else:
         imported = import_transactions(
             ynab_transactions,
-            access_token=os.environ.get(
-                "YNAB_ACCESS_TOKEN", getpass("YNAB Access Token: ")
-            ),
-            budget_id=os.environ["YNAB_BUDGET_ID"],
+            ynab_access_token=ynab_access_token,
+            ynab_budget_id=os.environ["YNAB_BUDGET_ID"],
         )
         print("Imported %d new transaction(s)" % len(imported))
 
@@ -132,11 +130,14 @@ def main():
     if debug:
         logging.basicConfig(level=logging.DEBUG)
 
-    # Initialize FinTS.
+    fints_pin = os.environ.get("FINTS_PIN")
+    if fints_pin is None:
+        fints_pin = getpass("FinTS pin: ")
+
     fints_client = FinTS3PinTanClient(
         "50010517",  # BLZ
         os.environ["FINTS_LOGIN"],
-        os.environ.get("FINTS_PIN", getpass("FinTS Pin: ")),
+        fints_pin,
         "https://fints.ing-diba.de/fints/",  # Endpoint
         product_id=os.environ.get("FINTS_PRODUCT_ID", None),
     )
@@ -145,10 +146,8 @@ def main():
         tan = input("Please enter TAN:")
         fints_client.send_tan(fints_client.init_tan_response, tan)
 
-    # Get sepa accounts.
     accounts = fints_client.get_sepa_accounts()
 
-    # Find selected one.
     selected_account = None
     for account in accounts:
         if account.iban == os.environ["FINTS_IBAN"]:
@@ -160,10 +159,12 @@ def main():
         sys.exit(1)
 
     interval = int(os.environ.get("SLEEP_INTERVAL", "300"))
+    ynab_access_token = os.environ.get("YNAB_ACCESS_TOKEN")
+    if ynab_access_token is None:
+        ynab_access_token = getpass("YNAB Access Token: ")
 
     while True:
-        ing_to_ynab(fints_client, selected_account, debug=debug)
-
+        ing_to_ynab(fints_client, selected_account, ynab_access_token, debug=debug)
         print("Sleeping for %d seconds" % interval)
         sleep(interval)
 
