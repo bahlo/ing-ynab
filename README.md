@@ -50,13 +50,15 @@ ing_ynab:
 ```
 After starting the stack with `docker-compose up -d`, run 
 `docker attach $container_id` to attach to the container. Note that the prompt
-for the pin might be hidden, so you have to enter the FinTS PIN directly.
+for the pin might be hidden, so you have to enter the pin directly.
 
 ## Configuration
 
 The configuration is done via environment variables:
 
 * `START_DATE`: The date to start getting transactions.
+* `DEBUG`: Set to `1` to enable debug output and print transactions instead of
+  importing them.
 
 ### YNAB
 
