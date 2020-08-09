@@ -62,6 +62,7 @@ The configuration is done via environment variables:
 * `YNAB_ACCESS_TOKEN`: Go to your budget settings to create one.
 * `YNAB_BUDGET_ID`: On the webpage of your budget the last number in the path.
 * `YNAB_ACCOUNT_ID`: On the webpage of the account the last uuid in the path.
+* `YNAB_FLAG_COLOR`: If set, use that color for the imported transactions.
 
 ### FinTS
 
