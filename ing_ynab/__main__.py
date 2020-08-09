@@ -52,7 +52,15 @@ def import_transactions(transactions, access_token=None, budget_id=None):
 def ing_to_ynab(fints_client, fints_account, debug=False):
     """This code is called in a predefined interval to add new ing transactions into ynab.
     """
-    start_date = os.environ.get("START_DATE", datetime.now())
+    # Try to read from state
+    start_date = None
+    try:
+        with open("state", "r") as state_file:
+            contents = state_file.read().splitlines()
+            start_date = datetime.fromisoformat(contents[0])
+    except:
+        start_date = os.environ.get("START_DATE", datetime.now())
+
     transactions = fints_client.get_transactions(
         fints_account, start_date=datetime.fromisoformat(start_date)
     )
@@ -73,6 +81,9 @@ def ing_to_ynab(fints_client, fints_account, debug=False):
             budget_id=os.environ["YNAB_BUDGET_ID"],
         )
         print("Imported %d new transaction(s)" % len(imported))
+
+    with open("state", "w") as state_file:
+        state_file.write("%s" % datetime.now().strftime("%Y-%m-%d"))
 
 
 def main():
