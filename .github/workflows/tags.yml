@@ -3,7 +3,7 @@ name: tags
 on:
   push:
     tags:
-      - 'v*'
+    - 'v*'
 
 jobs:
   build:
@@ -16,7 +16,7 @@ jobs:
       run: docker login docker.pkg.github.com -u bahlo -p "${{ secrets.GITHUB_TOKEN }}"
     - name: Build and publish
       run: |
-        export GITHUB_REF=${{ github.ref }} # refs/tags/v0.2.0
-        export TAG=$(echo $GITHUB_REF | sed 's/^refs\/tags\/v//g')
-        docker build -t docker.pkg.github.com/bahlo/ing_ynab/ing_ynab:$TAG .
+        echo "${{ github.ref }}"
+        export TAG=$(echo "${{ github.ref }}" | sed 's/^refs\/tags\/v//g')
+        docker build -t docker.pkg.github.com/bahlo/ing_ynab/ing_ynab:$TAG
         docker push docker.pkg.github.com/bahlo/ing_ynab/ing_ynab:$TAG
