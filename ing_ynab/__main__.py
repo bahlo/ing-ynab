@@ -4,18 +4,22 @@ from datetime import datetime
 from time import sleep
 from decimal import Decimal
 from hashlib import sha256
+from typing import Optional, NoReturn, List, Dict
+import json
 import logging
 import os
 import sys
 from getpass import getpass
 from dotenv import load_dotenv
 from fints.client import FinTS3PinTanClient
+from fints.models import SEPAAccount
 import requests
+from mt940.models import Transaction as FinTSTransaction
 
 YNAB_BASE_URL = "https://api.youneedabudget.com/v1"
 
 
-def hash_transaction(transaction):
+def hash_transaction(transaction: FinTSTransaction) -> str:
     """Generate a hash for the transaction to make them identifiable.
     """
     data = transaction.data
@@ -28,28 +32,35 @@ def hash_transaction(transaction):
     return sha256(payload.encode("utf-8")).hexdigest()
 
 
-def transform_transactions(transactions, account_id=None, flag_color=None):
+def transform_transactions(
+    transactions: List[FinTSTransaction],
+    account_id: str,
+    flag_color: Optional[str] = None,
+) -> List[Dict[str, str]]:
     """Transform the FinTS transactions into something the YNAB API understands.
     """
     transformed = []
     for transaction in transactions:
         data = transaction.data
-        amount_decimal = data["amount"].amount * Decimal("1000.0")
         transformed.append(
             {
                 "account_id": account_id,
                 "date": data["date"].isoformat(),
-                "amount": int(amount_decimal),
+                "amount": int(data["amount"].amount * Decimal("1000.0")),
                 "payee_name": data["applicant_name"],
                 "cleared": "cleared",
                 "memo": data["purpose"],
                 "flag_color": flag_color,
-            },
+            }
         )
     return transformed
 
 
-def import_transactions(ynab_transactions, ynab_access_token=None, ynab_budget_id=None):
+def import_transactions(
+    ynab_transactions: List[Dict[str, str]],
+    ynab_access_token: str,
+    ynab_budget_id: str,
+) -> List[int]:
     """Import the transaction into YNAB, returns an array with transaction ids.
 
     :param transactions: An array of transactions.
@@ -64,7 +75,12 @@ def import_transactions(ynab_transactions, ynab_access_token=None, ynab_budget_i
     return response.json()["data"]["transaction_ids"]
 
 
-def ing_to_ynab(fints_client, fints_account, ynab_access_token, debug=False):
+def ing_to_ynab(
+    fints_client: FinTS3PinTanClient,
+    fints_account: SEPAAccount,
+    ynab_access_token: str,
+    debug: bool = False,
+) -> NoReturn:
     """This code is called in a predefined interval to add new ing transactions into ynab.
     """
     # Try to read from state
@@ -98,7 +114,7 @@ def ing_to_ynab(fints_client, fints_account, ynab_access_token, debug=False):
     # Transform FinTS transactions to YNAB transactions.
     ynab_transactions = transform_transactions(
         transactions,
-        account_id=os.environ["YNAB_ACCOUNT_ID"],
+        os.environ["YNAB_ACCOUNT_ID"],
         flag_color=os.environ.get("YNAB_FLAG_COLOR"),
     )
 
@@ -108,9 +124,7 @@ def ing_to_ynab(fints_client, fints_account, ynab_access_token, debug=False):
             print(transaction)
     else:
         imported = import_transactions(
-            ynab_transactions,
-            ynab_access_token=ynab_access_token,
-            ynab_budget_id=os.environ["YNAB_BUDGET_ID"],
+            ynab_transactions, ynab_access_token, os.environ["YNAB_BUDGET_ID"],
         )
         print("Imported %d new transaction(s)" % len(imported))
 
@@ -121,7 +135,7 @@ def ing_to_ynab(fints_client, fints_account, ynab_access_token, debug=False):
         )
 
 
-def main():
+def main() -> NoReturn:
     """This is the main function
     """
     load_dotenv()
