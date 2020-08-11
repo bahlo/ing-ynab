@@ -146,14 +146,14 @@ def main() -> NoReturn:
     if debug:
         logging.basicConfig(level=logging.DEBUG)
 
-    fints_pin = os.environ.get("FINTS_PIN")
-    if fints_pin is None:
-        fints_pin = getpass("FinTS pin: ")
+    ing_pin = os.environ.get("ING_PIN")
+    if ing_pin is None:
+        ing_pin = getpass("ING pin: ")
 
     fints_client = FinTS3PinTanClient(
         "50010517",  # BLZ
-        os.environ["FINTS_LOGIN"],
-        fints_pin,
+        os.environ["ING_LOGIN"],
+        ing_pin,
         "https://fints.ing-diba.de/fints/",  # Endpoint
         product_id=os.environ.get("FINTS_PRODUCT_ID", None),
     )
@@ -166,7 +166,7 @@ def main() -> NoReturn:
 
     selected_account = None
     for account in accounts:
-        if account.iban == os.environ["FINTS_IBAN"]:
+        if account.iban == os.environ["ING_IBAN"]:
             selected_account = account
             break
     if selected_account is None:

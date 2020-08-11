@@ -59,6 +59,25 @@ services:
       # Environment variables, see the configuration section
 ```
 
+## Configuration
+
+The configuration is done via environment variables:
+
+* `START_DATE`: The date to start getting transactions (defaults to today).
+* `SLEEP_INTERVAL`: Interval in seconds until the next check happens 
+  (defaults to 5 minutes).
+* `FINTS_PRODUCT_ID`: Your FinTS product ID (deafults to python-fints one).
+* `ING_LOGIN`: The login id of your ING account.
+* `ING_IBAN`: The IBAN of the account you want to add.
+* `ING_PIN`: The pin of your ING account (leave empty to be prompted).
+* `YNAB_ACCESS_TOKEN`: Go to your budget settings to create one (leave empty
+  to be prompted).
+* `YNAB_BUDGET_ID`: On the webpage of your budget the last number in the path.
+* `YNAB_ACCOUNT_ID`: On the webpage of the account the last uuid in the path.
+* `YNAB_FLAG_COLOR`: If set, use that color for the imported transactions.
+* `DEBUG`: Set to `1` to enable debug output and print transactions instead of
+  importing them.
+
 ## Security
 
 You can pass in your bank pin and YNAB access token via environment variables, 
@@ -79,19 +98,3 @@ variables. For docker-compose, add these fields:
 After starting with `docker-compose up -d`, run `docker attach $container_id` 
 to attach to the container. Note that the prompt for the pin might be hidden, 
 so you have to enter the pin directly.
-
-## Configuration
-
-The configuration is done via environment variables:
-
-* `START_DATE`: The date to start getting transactions.
-* `DEBUG`: Set to `1` to enable debug output and print transactions instead of
-  importing them.
-* `FINTS_LOGIN`: The login id of your ING account (the last ten digits of your IBAN).
-* `FINTS_IBAN`: The IBAN of the account you want to add.
-* `FINTS_PIN`: The ping (password) of your ING account (leave empty to be prompted).
-* `FINTS_PRODUCT_ID`: Your FinTS product ID (leave empty to use the python-fints one, though that's discouraged).
-* `YNAB_ACCESS_TOKEN`: Go to your budget settings to create one.
-* `YNAB_BUDGET_ID`: On the webpage of your budget the last number in the path.
-* `YNAB_ACCOUNT_ID`: On the webpage of the account the last uuid in the path.
-* `YNAB_FLAG_COLOR`: If set, use that color for the imported transactions.
