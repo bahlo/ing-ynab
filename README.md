@@ -48,7 +48,7 @@ $ docker run \
 ### docker-compose
 
 ```yml
-version: "3"
+version: "2.0"
 
 services:
   ing_ynab:
