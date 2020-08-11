@@ -17,6 +17,7 @@ from mt940.models import Transaction as FinTSTransaction
 
 YNAB_BASE_URL = "https://api.youneedabudget.com/v1"
 
+# https://github.com/PyCQA/pylint/issues/647
 # pylint: disable=C0330
 
 
