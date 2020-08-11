@@ -14,7 +14,7 @@ If you don't do this, the application will fallback to the product id from the
 be used for evaluation.
 
 Since this application will need your ING pin and YNAB access token it's 
-recommended to run this in your local network (could be a raspberry pi, it's 
+recommended to run this in your local network (could be a Raspberry Pi, it's 
 pretty light).
 
 The application writes the last date and a hash of the last imported transaction
