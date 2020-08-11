@@ -19,4 +19,18 @@ jobs:
         pipenv install --dev
         pipenv run pylint ing_ynab
         pipenv run black --check ing_ynab
-
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Setup
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    - name: Install and run pytest
+      run: | 
+        pip install pipenv
+        pipenv install --dev
+        python -m pytest
