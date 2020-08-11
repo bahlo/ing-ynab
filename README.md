@@ -1,4 +1,6 @@
-# ing_ynab [![lint](https://github.com/bahlo/fints_ynab/workflows/lint/badge.svg)](https://github.com/bahlo/ing_ynab/actions?query=workflow%3Alint) [![docker](https://github.com/bahlo/ing_ynab/workflows/docker/badge.svg)](https://github.com/bahlo/ing_ynab/actions?query=workflow%3Adocker)
+![ing_ynab logo](logo.jpg)
+
+[![lint](https://github.com/bahlo/fints_ynab/workflows/lint/badge.svg)](https://github.com/bahlo/ing_ynab/actions?query=workflow%3Alint) [![docker](https://github.com/bahlo/ing_ynab/workflows/docker/badge.svg)](https://github.com/bahlo/ing_ynab/actions?query=workflow%3Adocker)
 
 Import your ING (de) bank statements via FinTS into YNAB. 
 
