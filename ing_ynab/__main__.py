@@ -5,7 +5,6 @@ from time import sleep
 from decimal import Decimal
 from hashlib import sha256
 from typing import Optional, NoReturn, List, Dict
-import json
 import logging
 import os
 import sys
@@ -17,6 +16,8 @@ import requests
 from mt940.models import Transaction as FinTSTransaction
 
 YNAB_BASE_URL = "https://api.youneedabudget.com/v1"
+
+# pylint: disable=C0330
 
 
 def hash_transaction(transaction: FinTSTransaction) -> str:
