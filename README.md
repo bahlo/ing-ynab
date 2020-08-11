@@ -84,7 +84,7 @@ You can pass in your bank pin and YNAB access token via environment variables,
 if you like. This has the drawback that anyone with system access can read 
 and potentially use them so it's discouraged (but supported).
 
-The alternative is not specifying `YNAB_ACCESS_TOKEN` and/or `FINTS_PIN`, which
+The alternative is not specifying `YNAB_ACCESS_TOKEN` and/or `ING_PIN`, which
 will cause the application to prompt you on startup. This has the drawback that
 you need to input them everytime the application restarts.
 
