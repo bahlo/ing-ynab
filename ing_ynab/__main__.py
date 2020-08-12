@@ -10,8 +10,8 @@ import sys
 from getpass import getpass
 from dotenv import load_dotenv
 
-from ing_ynab.ynab import YNABClient
-from ing_ynab.ing import INGClient, AccountNotFoundException, hash_transaction
+from ynab import YNABClient
+from ing import INGClient, AccountNotFoundException, hash_transaction
 
 
 def ing_to_ynab(
@@ -59,7 +59,10 @@ def ing_to_ynab(
     with open("state", "w") as state_file:
         state_file.write(
             "%s\n%s"
-            % (datetime.now().strftime("%Y-%m-%d"), hash_transaction(transactions[0]),)
+            % (
+                datetime.now().strftime("%Y-%m-%d"),
+                hash_transaction(transactions[len(transactions) - 1]),
+            )
         )
 
 

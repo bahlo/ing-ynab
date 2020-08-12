@@ -68,6 +68,8 @@ class INGClient:
         for i, transaction in enumerate(transactions):
             if hash_transaction(transaction) == last_hash:
                 array_start = i + 1
+                break
+
         transactions = transactions[array_start:]
         return transactions
 

@@ -29,7 +29,7 @@ This can be run on any environment with Python 3.8 or higher.
 
 ```sh
 $ git clone git@github.com:bahlo/ing_ynab.git && cd ing_ynab
-$ pip install .
+$ python setup.py install
 $ cp .env.example .env # and customize fields
 $ ing-ynab
 ```
