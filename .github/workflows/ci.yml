@@ -33,4 +33,4 @@ jobs:
       run: | 
         pip install pipenv
         pipenv install --dev
-        python -m pytest
+        pipenv run python -m pytest
