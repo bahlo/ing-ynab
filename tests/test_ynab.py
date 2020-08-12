@@ -8,7 +8,8 @@ from ing_ynab.ynab import YNABClient
 class TestTransformTransactions(unittest.TestCase):
     def test_correct_hash(self):
         account_id = "abcdef"
-        ynab_client = YNABClient("", account_id, "")
+        flag_color = "orange"
+        ynab_client = YNABClient("", account_id, "", flag_color=flag_color)
 
         transactions = [
             Transaction(
@@ -30,10 +31,7 @@ class TestTransformTransactions(unittest.TestCase):
                 },
             ),
         ]
-        flag_color = "orange"
-        transformed = ynab_client.transform_transactions(
-            transactions, flag_color=flag_color
-        )
+        transformed = ynab_client.transform_transactions(transactions)
         self.assertEqual(2, len(transformed))
         self.assertEqual(
             {
