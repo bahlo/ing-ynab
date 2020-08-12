@@ -16,18 +16,13 @@ from state import State
 
 
 def ing_to_ynab(
-    state: State,
-    ing_client: INGClient,
-    ynab_client: YNABClient,
-    ynab_flag_color: Optional[str] = None,
-    start_date_config: Optional[datetime] = None,
-    debug: bool = False,
+    state: State, ing_client: INGClient, ynab_client: YNABClient, debug: bool = False,
 ) -> NoReturn:
     """
     This code is called in a predefined interval to add new ing transactions
     into ynab.
     """
-    start_date, last_hash = state.restore(start_date_config)
+    start_date, last_hash = state.restore()
 
     transactions = ing_client.get_transactions(
         start_date=start_date, last_hash=last_hash
@@ -38,9 +33,7 @@ def ing_to_ynab(
         return
 
     # Transform FinTS transactions to YNAB transactions.
-    ynab_transactions = ynab_client.transform_transactions(
-        transactions, flag_color=ynab_flag_color,
-    )
+    ynab_transactions = ynab_client.transform_transactions(transactions)
 
     # Print or import the transformed transactions.
     if debug:
@@ -98,19 +91,16 @@ def main() -> NoReturn:
         print("Available accounts: %s" % ex.accounts)
         sys.exit(1)
 
-    ynab_client = YNABClient(ynab_access_token, ynab_account_id, ynab_budget_id)
+    ynab_client = YNABClient(
+        ynab_access_token, ynab_account_id, ynab_budget_id, flag_color=ynab_flag_color
+    )
 
-    state = State("state")
+    state = State("state", start_date)
 
     # Import new statements into YNAB every n minutes
     while True:
         ing_to_ynab(
-            state,
-            ing_client,
-            ynab_client,
-            start_date_config=start_date,
-            ynab_flag_color=ynab_flag_color,
-            debug=debug,
+            state, ing_client, ynab_client, debug=debug,
         )
         print("Sleeping for %d seconds" % interval)
         sleep(interval)

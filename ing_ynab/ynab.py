@@ -17,11 +17,19 @@ class YNABClient:
     access_token: str
     account_id: str
     budget_id: str
+    flag_color: Optional[str]
 
-    def __init__(self, access_token: str, account_id: str, budget_id: str):
+    def __init__(
+        self,
+        access_token: str,
+        account_id: str,
+        budget_id: str,
+        flag_color: Optional[str] = None,
+    ):
         self.access_token = access_token
         self.account_id = account_id
         self.budget_id = budget_id
+        self.flag_color = flag_color
 
     def import_transactions(self, transactions: List[Dict[str, str]]) -> List[int]:
         """
@@ -37,7 +45,7 @@ class YNABClient:
         return response.json()["data"]["transaction_ids"]
 
     def transform_transactions(
-        self, transactions: List[FinTSTransaction], flag_color: Optional[str] = None,
+        self, transactions: List[FinTSTransaction],
     ) -> List[Dict[str, str]]:
         """
         Transform the FinTS transactions into something the YNAB API understands.
@@ -53,7 +61,7 @@ class YNABClient:
                     "payee_name": data["applicant_name"],
                     "cleared": "cleared",
                     "memo": data["purpose"],
-                    "flag_color": flag_color,
+                    "flag_color": self.flag_color,
                 }
             )
         return transformed
