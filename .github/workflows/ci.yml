@@ -33,7 +33,7 @@ jobs:
       run: | 
         pip install pipenv
         pipenv install --dev
-        pipenv run pipenv-setup --check
+        pipenv run pipenv-setup check
   test:
     name: Test
     runs-on: ubuntu-latest
