@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
 from ing_ynab import VERSION
 
@@ -36,6 +36,7 @@ setup(
         "webencodings==0.5.1",
         "xmlschema==1.2.2",
     ],
+    dependency_links=[],
     python_requires=">=3.8",
     entry_points={"console_scripts": ["ing-ynab=ing_ynab.__main__:main"]},
     classifiers=[
