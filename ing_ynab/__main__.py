@@ -12,9 +12,11 @@ from dotenv import load_dotenv
 
 from ynab import YNABClient
 from ing import INGClient, AccountNotFoundException, hash_transaction
+from state import State
 
 
 def ing_to_ynab(
+    state: State,
     ing_client: INGClient,
     ynab_client: YNABClient,
     ynab_flag_color: Optional[str] = None,
@@ -25,15 +27,7 @@ def ing_to_ynab(
     This code is called in a predefined interval to add new ing transactions
     into ynab.
     """
-    start_date = None
-    last_hash = None
-    try:
-        with open("state", "r") as state_file:
-            contents = state_file.read().splitlines()
-            start_date = datetime.fromisoformat(contents[0])
-            last_hash = contents[1]
-    except:  # pylint: disable=bare-except
-        start_date = start_date_config
+    start_date, last_hash = state.restore(start_date_config)
 
     transactions = ing_client.get_transactions(
         start_date=start_date, last_hash=last_hash
@@ -56,14 +50,7 @@ def ing_to_ynab(
         imported = ynab_client.import_transactions(ynab_transactions)
         print("Imported %d new transaction(s)" % len(imported))
 
-    with open("state", "w") as state_file:
-        state_file.write(
-            "%s\n%s"
-            % (
-                datetime.now().strftime("%Y-%m-%d"),
-                hash_transaction(transactions[len(transactions) - 1]),
-            )
-        )
+    state.store(hash_transaction(transactions[len(transactions) - 1]))
 
 
 def main() -> NoReturn:
@@ -113,9 +100,12 @@ def main() -> NoReturn:
 
     ynab_client = YNABClient(ynab_access_token, ynab_account_id, ynab_budget_id)
 
+    state = State("state")
+
     # Import new statements into YNAB every n minutes
     while True:
         ing_to_ynab(
+            state,
             ing_client,
             ynab_client,
             start_date_config=start_date,
