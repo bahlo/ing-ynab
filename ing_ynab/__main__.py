@@ -10,7 +10,7 @@ import sys
 from getpass import getpass
 from dotenv import load_dotenv
 
-import ynab
+from ynab import YNABClient
 from ing import INGClient, AccountNotFoundException, hash_transaction
 
 # https://github.com/PyCQA/pylint/issues/647
@@ -19,15 +19,14 @@ from ing import INGClient, AccountNotFoundException, hash_transaction
 
 def ing_to_ynab(
     ing_client: INGClient,
-    ynab_access_token: str,
-    ynab_account_id: str,
-    ynab_budget_id: str,
+    ynab_client: YNABClient,
     ynab_flag_color: Optional[str] = None,
     start_date_config: Optional[datetime] = None,
     debug: bool = False,
 ) -> NoReturn:
     """
-    This code is called in a predefined interval to add new ing transactions into ynab.
+    This code is called in a predefined interval to add new ing transactions
+    into ynab.
     """
     start_date = None
     last_hash = None
@@ -48,8 +47,8 @@ def ing_to_ynab(
         return
 
     # Transform FinTS transactions to YNAB transactions.
-    ynab_transactions = ynab.transform_transactions(
-        transactions, ynab_account_id, flag_color=ynab_flag_color,
+    ynab_transactions = ynab_client.transform_transactions(
+        transactions, flag_color=ynab_flag_color,
     )
 
     # Print or import the transformed transactions.
@@ -57,9 +56,7 @@ def ing_to_ynab(
         for transaction in ynab_transactions:
             print(transaction)
     else:
-        imported = ynab.import_transactions(
-            ynab_transactions, ynab_access_token, os.environ["YNAB_BUDGET_ID"],
-        )
+        imported = ynab_client.import_transactions(ynab_transactions)
         print("Imported %d new transaction(s)" % len(imported))
 
     with open("state", "w") as state_file:
@@ -114,13 +111,13 @@ def main() -> NoReturn:
         print("Available accounts: %s" % ex.accounts)
         sys.exit(1)
 
+    ynab_client = YNABClient(ynab_access_token, ynab_account_id, ynab_budget_id)
+
     # Import new statements into YNAB every n minutes
     while True:
         ing_to_ynab(
             ing_client,
-            ynab_access_token,
-            ynab_account_id,
-            ynab_budget_id,
+            ynab_client,
             start_date_config=start_date,
             ynab_flag_color=ynab_flag_color,
             debug=debug,

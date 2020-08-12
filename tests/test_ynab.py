@@ -2,11 +2,14 @@ import unittest
 from datetime import datetime
 from mt940.models import Transaction, Amount
 
-from ing_ynab.ynab import transform_transactions
+from ing_ynab.ynab import YNABClient
 
 
 class TestTransformTransactions(unittest.TestCase):
     def test_correct_hash(self):
+        account_id = "abcdef"
+        ynab_client = YNABClient("", account_id, "")
+
         transactions = [
             Transaction(
                 [],
@@ -27,10 +30,9 @@ class TestTransformTransactions(unittest.TestCase):
                 },
             ),
         ]
-        account_id = "abcdef"
         flag_color = "orange"
-        transformed = transform_transactions(
-            transactions, account_id, flag_color=flag_color
+        transformed = ynab_client.transform_transactions(
+            transactions, flag_color=flag_color
         )
         self.assertEqual(2, len(transformed))
         self.assertEqual(

@@ -1,1 +1,4 @@
-version = "0.3.1"
+"""
+This module contains only the version.
+"""
+VERSION = "0.3.1"
