@@ -1,11 +1,16 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 from ing_ynab import VERSION
+
+with open("README.md", "r") as fh:
+    long_description = fh.read()
 
 setup(
     name="ing_ynab",
     version=VERSION,
     description="Import your ING Germany bank statements via FinTS into YNAB",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     url="https://github.com/bahlo/ing_ynab",
     author="Arne Bahlo",
     author_email="hallo@arne.me",
@@ -55,5 +60,12 @@ setup(
         "xmlschema==1.2.2",
     ],
     python_requires=">=3.8",
-    entry_points={"console_scripts": ["ing-ynab = ing_ynab.cli:run"]},
+    entry_points={"console_scripts": ["ing-ynab=ing_ynab.__main__:main"]},
+    classifiers=[
+        "Development Status :: 4 - Beta",
+        "Intended Audience :: End Users/Desktop",
+        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python :: 3.8",
+        "Typing :: Typed",
+    ],
 )
