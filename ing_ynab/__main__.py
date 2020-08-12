@@ -13,9 +13,6 @@ from dotenv import load_dotenv
 from ynab import YNABClient
 from ing import INGClient, AccountNotFoundException, hash_transaction
 
-# https://github.com/PyCQA/pylint/issues/647
-# pylint: disable=C0330
-
 
 def ing_to_ynab(
     ing_client: INGClient,

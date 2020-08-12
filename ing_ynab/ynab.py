@@ -6,9 +6,6 @@ from typing import List, Optional, Dict
 from mt940.models import Transaction as FinTSTransaction
 import requests
 
-# https://github.com/PyCQA/pylint/issues/647
-# pylint: disable=C0330
-
 YNAB_BASE_URL = "https://api.youneedabudget.com/v1"
 
 

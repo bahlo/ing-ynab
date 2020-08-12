@@ -8,9 +8,6 @@ from mt940.models import Transaction
 from fints.client import FinTS3PinTanClient
 from fints.models import SEPAAccount
 
-# https://github.com/PyCQA/pylint/issues/647
-# pylint: disable=C0330
-
 ING_DE_BLZ = "50010517"
 ING_DE_ENDPOINT = "https://fints.ing-diba.de/fints/"
 
