@@ -28,11 +28,10 @@ There are various ways to start the application:
 This can be run on any environment with Python 3.8 or higher.
 
 ```sh
-$ pip install pipenv # to install pipenv (https://pipenv.pypa.io) 
-$ pipenv shell # to spawn a new shell with your env
-$ pipenv install # to install dependencies
+$ git clone git@github.com:bahlo/ing_ynab.git && cd ing_ynab
+$ pip install .
 $ cp .env.example .env # and customize fields
-$ python ing_ynab # to run the app
+$ ing-ynab
 ```
 
 ### Docker
