@@ -1,2 +1,5 @@
 .env
 state
+build
+dist
+*.egg-info
