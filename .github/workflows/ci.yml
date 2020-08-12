@@ -19,6 +19,22 @@ jobs:
         pipenv install --dev
         pipenv run pylint ing_ynab
         pipenv run black --check ing_ynab
+  check:
+    name: Verify requirements.txt
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Setup
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    - name: Install and run linters
+      run: | 
+        pip install pipenv
+        pipenv install --dev
+        pipenv lock -r > requirements.txt
+        git diff --exit-code requirements.txt
   test:
     name: Test
     runs-on: ubuntu-latest
