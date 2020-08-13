@@ -1,6 +1,6 @@
-![ing_ynab logo](logo.jpg)
+![ing-ynab logo](logo.jpg)
 
-[![ci](https://github.com/bahlo/fints_ynab/workflows/ci/badge.svg)](https://github.com/bahlo/ing_ynab/actions?query=workflow%3Aci)
+[![ci](https://github.com/bahlo/fints_ynab/workflows/ci/badge.svg)](https://github.com/bahlo/ing-ynab/actions?query=workflow%3Aci)
 
 Import your ING Germany bank statements via FinTS into YNAB.
 
@@ -40,7 +40,7 @@ $ cp .env.example .env # and customize fields
 $ docker run \
     -v $PWD/ing_ynab_state:/app/state \
     --env-file .env \
-    docker.pkg.github.com/bahlo/ing_ynab/ing_ynab:0.4.0
+    docker.pkg.github.com/bahlo/ing-ynab/ing-ynab:0.4.0
 ```
 
 ### docker-compose
@@ -49,8 +49,8 @@ $ docker run \
 version: "2.0"
 
 services:
-  ing_ynab:
-    image: docker.pkg.github.com/bahlo/ing_ynab/ing_ynab:0.4.0
+  ing-ynab:
+    image: docker.pkg.github.com/bahlo/ing-ynab/ing-ynab:0.4.0
     volumes:
       - ${PWD}/ing_ynab_state:/app/state
     environment:
