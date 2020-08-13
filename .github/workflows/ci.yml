@@ -49,9 +49,38 @@ jobs:
         pip install pipenv
         pipenv install --dev
         pipenv run python -m pytest
-  publish:
-    name: Publish on PyPi (Test)
+  docker:
+    name: Docker
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags')
+    needs:
+      - lint
+      - check
+      - test
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Login
+      run: docker login docker.pkg.github.com -u bahlo -p "${{ secrets.GITHUB_TOKEN }}"
+    - name: Build and publish docker latest
+      if: github.ref == 'refs/heads/main'
+      run: |
+        docker build -t docker.pkg.github.com/bahlo/ing_ynab/ing_ynab:latest .
+        docker push docker.pkg.github.com/bahlo/ing_ynab/ing_ynab:latest
+    - name: Build and publish docker image
+      if: startsWith(github.ref, 'refs/tags')
+      run: |
+        export TAG=$(echo "${{ github.ref }}" | sed 's/^refs\/tags\/v//g')
+        docker build -t docker.pkg.github.com/bahlo/ing_ynab/ing_ynab:$TAG .
+        docker push docker.pkg.github.com/bahlo/ing_ynab/ing_ynab:$TAG
+  publish:
+    name: Publish on PyPi
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags')
+    needs:
+      - lint
+      - check
+      - test
     steps:
     - name: Checkout
       uses: actions/checkout@v1
@@ -66,5 +95,4 @@ jobs:
     - name: Publish distribution to Test PyPI
       uses: pypa/gh-action-pypi-publish@master
       with:
-        password: ${{ secrets.TESTPYPI_TOKEN }}
-        repository_url: https://test.pypi.org/legacy/
+        password: ${{ secrets.PYPI_TOKEN }}
