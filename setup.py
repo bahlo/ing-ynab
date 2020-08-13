@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 from ing_ynab import VERSION
 
@@ -16,7 +16,7 @@ setup(
     author_email="hallo@arne.me",
     license="MIT",
     keywords="ing ynab fints",
-    packages=["ing_ynab"],
+    packages=find_packages(exclude=["tests*"]),
     install_requires=[
         "bleach==3.1.5; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'",
         "certifi==2020.6.20",
@@ -38,7 +38,7 @@ setup(
     ],
     dependency_links=[],
     python_requires=">=3.8",
-    entry_points={"console_scripts": ["ing-ynab=ing_ynab.__main__:main"]},
+    entry_points={"console_scripts": ["ing-ynab=ing_ynab.cli:main"]},
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: End Users/Desktop",

@@ -6,15 +6,15 @@ on:
     - 'v*'
 
 jobs:
-  build:
-    name: Build
+  docker:
+    name: Docker
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v1
     - name: Login
       run: docker login docker.pkg.github.com -u bahlo -p "${{ secrets.GITHUB_TOKEN }}"
-    - name: Build and publish
+    - name: Build and publish docker image
       run: |
         export TAG=$(echo "${{ github.ref }}" | sed 's/^refs\/tags\/v//g')
         docker build -t docker.pkg.github.com/bahlo/ing_ynab/ing_ynab:$TAG .

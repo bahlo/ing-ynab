@@ -49,3 +49,18 @@ jobs:
         pip install pipenv
         pipenv install --dev
         pipenv run python -m pytest
+  publish:
+    name: Publish on PyPi (Test)
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Setup
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    - name: Publish module
+      run: |
+        pip3 install twine setuptools wheel
+        python3 setup.py sdist bdist_wheel
+        python3 -m twine upload -u __token__ -p "$TESTPYPI_TOKEN" --repository testpypi dist/*
