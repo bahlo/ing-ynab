@@ -59,8 +59,12 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: '3.x'
-    - name: Publish module
+    - name: Build module
       run: |
-        pip3 install twine setuptools wheel
+        pip3 install setuptools wheel
         python3 setup.py sdist bdist_wheel
-        python3 -m twine upload -u __token__ -p "$TESTPYPI_TOKEN" --repository testpypi dist/*
+    - name: Publish distribution to Test PyPI
+      uses: pypa/gh-action-pypi-publish@master
+      with:
+        password: ${{ secrets.TESTPYPI_TOKEN }}
+        repository_url: https://test.pypi.org/legacy/
