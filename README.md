@@ -96,3 +96,16 @@ variables. For docker-compose, add these fields:
 After starting with `docker-compose up -d`, run `docker attach $container_id` 
 to attach to the container. Note that the prompt for the pin might be hidden, 
 so you have to enter the pin directly.
+
+## FAQ
+
+### Why is this ING-only? Isn't FinTS a general protocol?
+It is, but the implementations differ a lot. This actually started out as a
+general-purpose library but I can only really test ING and I rather have a 
+specialised library than a multipurpose one where I can't guarantee 
+functionality.
+
+### Can you support my bank?
+The [python-fints](https://github.com/raphaelm/python-fints) library supports
+a lot of banks, so probably. But we need to work together as I can't test it.
+Feel free to get in touch: <hallo@arne.me>
