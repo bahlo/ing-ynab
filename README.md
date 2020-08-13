@@ -28,9 +28,8 @@ There are various ways to start the application:
 This can be run on any environment with Python 3.8 or higher.
 
 ```sh
-$ git clone git@github.com:bahlo/ing_ynab.git && cd ing_ynab
-$ python setup.py install
-$ cp .env.example .env # and customize fields
+$ python3 -m pip install ing-ynab
+$ touch .env # see configuration section
 $ ing-ynab
 ```
 
