@@ -6,12 +6,12 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-    name="ing_ynab",
+    name="ing-ynab",
     version=VERSION,
     description="Import your ING Germany bank statements via FinTS into YNAB",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/bahlo/ing_ynab",
+    url="https://github.com/bahlo/ing-ynab",
     author="Arne Bahlo",
     author_email="hallo@arne.me",
     license="MIT",
