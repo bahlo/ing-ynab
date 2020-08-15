@@ -9,7 +9,7 @@ import os
 from getpass import getpass
 from dotenv import load_dotenv
 
-from ing_ynab.ynab import YNABClient
+from ing_ynab.ynab import YNABClient, YNABError
 from ing_ynab.ing import INGClient, AccountNotFoundException, hash_transaction
 from ing_ynab.state import State
 
@@ -98,9 +98,10 @@ def main() -> int:
 
     # Import new statements into YNAB every n minutes
     while True:
-        ing_to_ynab(
-            state, ing_client, ynab_client, debug=debug,
-        )
+        try:
+            ing_to_ynab(state, ing_client, ynab_client, debug=debug)
+        except YNABError as ex:
+            print("Could not import transactions: %s" % ex)
         print("Sleeping for %d seconds" % interval)
         sleep(interval)
 

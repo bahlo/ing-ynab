@@ -9,6 +9,12 @@ import requests
 YNAB_BASE_URL = "https://api.youneedabudget.com/v1"
 
 
+class YNABError(Exception):
+    """
+    YNABError is raised when YNAB returns an error.
+    """
+
+
 class YNABClient:
     """
     YNABClient provides methods to transform and import transactions into YNAB.
@@ -41,8 +47,10 @@ class YNABClient:
         }
         path = "/budgets/" + self.budget_id + "/transactions"
         response = requests.post(YNAB_BASE_URL + path, json=payload, headers=headers)
-        response.raise_for_status()
-        return response.json()["data"]["transaction_ids"]
+        body = response.json()
+        if response.status_code >= 400:
+            raise YNABError(body["error"]["detail"])
+        return body["data"]["transaction_ids"]
 
     def transform_transactions(
         self, transactions: List[FinTSTransaction],
