@@ -40,7 +40,7 @@ $ cp .env.example .env # and customize fields
 $ docker run \
     -v $PWD/ing_ynab_state:/app/state \
     --env-file .env \
-    docker.pkg.github.com/bahlo/ing-ynab/ing-ynab:1.0.1
+    docker.pkg.github.com/bahlo/ing-ynab/ing-ynab:1.0.2
 ```
 
 ### docker-compose
@@ -50,7 +50,7 @@ version: "2.0"
 
 services:
   ing-ynab:
-    image: docker.pkg.github.com/bahlo/ing-ynab/ing-ynab:1.0.1
+    image: docker.pkg.github.com/bahlo/ing-ynab/ing-ynab:1.0.2
     volumes:
       - ${PWD}/ing_ynab_state:/app/state
     environment:
