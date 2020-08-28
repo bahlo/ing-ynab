@@ -61,7 +61,7 @@ def main() -> int:
         ing_pin = getpass("ING pin: ")
 
     ynab_access_token = os.environ.get("YNAB_ACCESS_TOKEN")
-    if ynab_access_token is None:
+    if ynab_access_token is None and not debug:
         ynab_access_token = getpass("YNAB Access Token: ")
 
     ynab_account_id = os.environ["YNAB_ACCOUNT_ID"]
