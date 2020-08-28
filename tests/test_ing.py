@@ -16,5 +16,5 @@ class TestHashTransaction(unittest.TestCase):
         }
         hash = hash_transaction(Transaction([], data=data))
         self.assertEqual(
-            hash, "7b13f79818b44944607b49b0a700e8b820c8389df8ef90a65e7657df5d3ded9a"
+            hash, "c1b017447122828744a8d7ef21cb981675f3c99235ff31dfb7a3dab494c80934"
         )
