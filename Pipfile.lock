@@ -39,10 +39,10 @@
         },
         "elementpath": {
             "hashes": [
-                "sha256:2c8207772c4beb859cfbf9a6ac866349ce5d2ea49d94d4f6132f66fecbea7fd4",
-                "sha256:be296a00a8ebbb858864c577b4c8cc8e2a72d8e6a94c58d725a2b64a1c6aa72f"
+                "sha256:8ea6aefe90a3d7f968921789210cdfc1f6740b305dc5d7f70b1151c73d673d29",
+                "sha256:c2f5e1fb124f2ffc0b8a23db8e127b87ec9785baacec82c71aa95e0130cf59c5"
             ],
-            "version": "==2.0.1"
+            "version": "==2.0.2"
         },
         "fints": {
             "hashes": [
@@ -156,10 +156,10 @@
         },
         "attrs": {
             "hashes": [
-                "sha256:0ef97238856430dcf9228e07f316aefc17e8939fc8507e18c6501b761ef1a42a",
-                "sha256:2867b7b9f8326499ab5b0e2d12801fa5c98842d2cbd22b35112ae04bf85b4dff"
+                "sha256:26b54ddbbb9ee1d34d5d3668dd37d6cf74990ab23c828c2888dccdceee395594",
+                "sha256:fce7fc47dfc976152e82d53ff92fa0407700c21acd20886a13777a0d20e655dc"
             ],
-            "version": "==20.1.0"
+            "version": "==20.2.0"
         },
         "black": {
             "hashes": [
@@ -233,10 +233,10 @@
         },
         "isort": {
             "hashes": [
-                "sha256:60a1b97e33f61243d12647aaaa3e6cc6778f5eb9f42997650f1cc975b6008750",
-                "sha256:d488ba1c5a2db721669cc180180d5acf84ebdc5af7827f7aaeaa75f73cf0e2b8"
+                "sha256:92533892058de0306e51c88f22ece002a209dc8e80288aa3cec6d443060d584f",
+                "sha256:a200d47b7ee8b7f7d0a9646650160c4a51b6a91a9413fd31b1da2c4de789f5d3"
             ],
-            "version": "==5.4.2"
+            "version": "==5.5.1"
         },
         "lazy-object-proxy": {
             "hashes": [
@@ -273,10 +273,10 @@
         },
         "more-itertools": {
             "hashes": [
-                "sha256:68c70cc7167bdf5c7c9d8f6954a7837089c6a36bf565383919bb595efb8a17e5",
-                "sha256:b78134b2063dd214000685165d81c154522c3ee0a1c0d4d113c80361c234c5a2"
+                "sha256:6f83822ae94818eae2612063a5101a7311e68ae8002005b5e05f03fd74a86a20",
+                "sha256:9b30f12df9393f0d28af9210ff8efe48d10c94f73e5daf886f10c4b0b0b4f03c"
             ],
-            "version": "==8.4.0"
+            "version": "==8.5.0"
         },
         "orderedmultidict": {
             "hashes": [
