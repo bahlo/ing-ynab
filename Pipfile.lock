@@ -39,10 +39,10 @@
         },
         "elementpath": {
             "hashes": [
-                "sha256:8ea6aefe90a3d7f968921789210cdfc1f6740b305dc5d7f70b1151c73d673d29",
-                "sha256:c2f5e1fb124f2ffc0b8a23db8e127b87ec9785baacec82c71aa95e0130cf59c5"
+                "sha256:1f652f515866f2a9bdf96f118cd3f9d328af213451c0a88c34d061eec729bdcf",
+                "sha256:42270be4b384033c78b2b70e8701f410acbf5563b82f306cf249478c1fc99a0c"
             ],
-            "version": "==2.0.2"
+            "version": "==2.0.3"
         },
         "fints": {
             "hashes": [
@@ -133,10 +133,10 @@
         },
         "xmlschema": {
             "hashes": [
-                "sha256:aace96e9c0fda70a0156491f9fadc51b7b8fe80d6a532078c661f84910800b94",
-                "sha256:c981db622f9f00bffcb61648ab9a6f21d6655cfb66ad994918b079705b9b9a34"
+                "sha256:7fdcf173a37b00a220c92ff8ce27b2fc99ea6085471539d225fe5225e8148df2",
+                "sha256:d8a4912578f979c0ee6e56db7b9176ee85a437454dd2486d5cb456343938c3ce"
             ],
-            "version": "==1.2.3"
+            "version": "==1.2.4"
         }
     },
     "develop": {
@@ -233,10 +233,10 @@
         },
         "isort": {
             "hashes": [
-                "sha256:92533892058de0306e51c88f22ece002a209dc8e80288aa3cec6d443060d584f",
-                "sha256:a200d47b7ee8b7f7d0a9646650160c4a51b6a91a9413fd31b1da2c4de789f5d3"
+                "sha256:171c5f365791073426b5ed3a156c2081a47f88c329161fd28228ff2da4c97ddb",
+                "sha256:ba91218eee31f1e300ecc079ef0c524cea3fc41bfbb979cbdf5fd3a889e3cfed"
             ],
-            "version": "==5.5.1"
+            "version": "==5.5.2"
         },
         "lazy-object-proxy": {
             "hashes": [
@@ -368,11 +368,11 @@
         },
         "pytest": {
             "hashes": [
-                "sha256:85228d75db9f45e06e57ef9bf4429267f81ac7c0d742cc9ed63d09886a9fe6f4",
-                "sha256:8b6007800c53fdacd5a5c192203f4e531eb2a1540ad9c752e052ec0f7143dbad"
+                "sha256:0e37f61339c4578776e090c3b8f6b16ce4db333889d65d0efb305243ec544b40",
+                "sha256:c8f57c2a30983f469bf03e68cdfa74dc474ce56b8f280ddcb080dfd91df01043"
             ],
             "index": "pypi",
-            "version": "==6.0.1"
+            "version": "==6.0.2"
         },
         "python-dateutil": {
             "hashes": [
