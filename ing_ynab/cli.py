@@ -6,6 +6,7 @@ from time import sleep
 from typing import NoReturn
 import logging
 import os
+import sys
 from getpass import getpass
 from dotenv import load_dotenv
 
@@ -102,6 +103,10 @@ def main() -> int:
             ing_to_ynab(state, ing_client, ynab_client, debug=debug)
         except YNABError as ex:
             print("Could not import transactions: %s" % ex)
+        except KeyboardInterrupt:
+            raise  # We need to have this case for ^C to work
+        except:  # pylint: disable=bare-except
+            print("Unexpected error:", sys.exc_info()[0])
         print("Sleeping for %d seconds" % interval)
         sleep(interval)
 
