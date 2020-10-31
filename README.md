@@ -1,7 +1,7 @@
 ![ing-ynab logo](logo.jpg)
 
 [![ci](https://github.com/bahlo/fints_ynab/workflows/ci/badge.svg)](https://github.com/bahlo/ing-ynab/actions?query=workflow%3Aci)
-![PyPI](https://img.shields.io/pypi/v/ing-ynab)
+[![PyPI](https://img.shields.io/pypi/v/ing-ynab)](https://pypi.org/project/ing-ynab)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/ing-ynab)
 ![PyPI - License](https://img.shields.io/pypi/l/ing-ynab)
 
