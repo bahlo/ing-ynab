@@ -19,7 +19,7 @@ setup(
     packages=find_packages(exclude=["tests*"]),
     install_requires=[
         "bleach==3.2.1; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'",
-        "certifi==2020.6.20",
+        "certifi==2020.11.8",
         "chardet==3.0.4",
         "elementpath==2.0.4",
         "fints==3.0.0",
