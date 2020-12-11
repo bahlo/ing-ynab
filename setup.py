@@ -25,7 +25,7 @@ setup(
         "fints==3.0.1",
         "idna==2.10; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
         "mt-940==4.23.0",
-        "packaging==20.4; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
+        "packaging==20.7; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
         "pyparsing==2.4.7; python_version >= '2.6' and python_version not in '3.0, 3.1, 3.2, 3.3'",
         "python-dotenv==0.15.0",
         "requests==2.25.0",
