@@ -46,11 +46,11 @@
         },
         "fints": {
             "hashes": [
-                "sha256:4349e1541b9b931cd17c846fd9916003704a277b979a0d88e3bacffe4fe90a24",
-                "sha256:46581d2d538558c4017b5ea19276fb86b1ffcfa0547ff2a04309dbd8511aadec"
+                "sha256:c3889f57fd6bedcefd09b34a6e8d40a6e7b6177088435ed618050655600af53d",
+                "sha256:d8a8920fb324a6a4cad2edc0a1a88a7a80b1072b5dc76af13f853ad8cbf80be7"
             ],
             "index": "pypi",
-            "version": "==3.0.0"
+            "version": "==3.0.1"
         },
         "idna": {
             "hashes": [
