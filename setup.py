@@ -28,7 +28,7 @@ setup(
         "packaging==20.7; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
         "pyparsing==2.4.7; python_version >= '2.6' and python_version not in '3.0, 3.1, 3.2, 3.3'",
         "python-dotenv==0.15.0",
-        "requests==2.25.0",
+        "requests==2.25.1",
         "sepaxml==2.3.0",
         "six==1.15.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
         "text-unidecode==1.3",
