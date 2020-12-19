@@ -52,7 +52,6 @@ jobs:
   docker:
     name: Docker
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags')
     needs:
       - lint
       - check
@@ -62,6 +61,9 @@ jobs:
       uses: actions/checkout@v1
     - name: Login
       run: docker login docker.pkg.github.com -u bahlo -p "${{ secrets.GITHUB_TOKEN }}"
+    - name: Build docker container
+      if: github.ref != 'refs/heads/main' && !startsWith(github.ref, 'refs/tags')
+      run: docker build -t docker.pkg.github.com/bahlo/ing-ynab/ing-ynab:branch .
     - name: Build and publish docker latest
       if: github.ref == 'refs/heads/main'
       run: |
