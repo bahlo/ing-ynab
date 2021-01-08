@@ -39,10 +39,10 @@
         },
         "elementpath": {
             "hashes": [
-                "sha256:1dd545ed17692f903cc2d90ce721f924a5e8d657ad8b9ff639cd4512c633010b",
-                "sha256:d9612efed8ec2a5611f8fac90111e4c49464084eae9087028e63ac4b0b99cd90"
+                "sha256:02e84b490b97bd932be8dee20d2f7583d8b4983c97b08e0a12efcbba85f043fe",
+                "sha256:7ac47a1a0da75ccde8a7427954a05a8d8d341a6032c8e272c4d471babcc63e02"
             ],
-            "version": "==2.0.5"
+            "version": "==2.1.1"
         },
         "fints": {
             "hashes": [
