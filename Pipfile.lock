@@ -98,10 +98,10 @@
         },
         "sepaxml": {
             "hashes": [
-                "sha256:291504c61e40a18cb828951334077a9f0264ec1162997658ec40770e9dc901e4",
-                "sha256:a95c1326850c35b4b7d90f7a0f86ced798a74dc1c2f96bd9fe891a443807fdff"
+                "sha256:299ed1eb7561afc58886457b417311278f15afc13a8304bb909ee680850008d0",
+                "sha256:6fa18e97d21cfc27bd122d2862f2bc941501ed337603421026bd2578543bb2a4"
             ],
-            "version": "==2.3.0"
+            "version": "==2.4.0"
         },
         "six": {
             "hashes": [
