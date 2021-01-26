@@ -39,10 +39,10 @@
         },
         "elementpath": {
             "hashes": [
-                "sha256:02e84b490b97bd932be8dee20d2f7583d8b4983c97b08e0a12efcbba85f043fe",
-                "sha256:7ac47a1a0da75ccde8a7427954a05a8d8d341a6032c8e272c4d471babcc63e02"
+                "sha256:23e1fed8d196d9a6cc4d220ef11fbe7eb8cff3a27848621c447e9d96134b2085",
+                "sha256:5aede65922701e1fc57337008784ce18d02cecc26ac3519ddf77c296dfb2465e"
             ],
-            "version": "==2.1.1"
+            "version": "==2.1.2"
         },
         "fints": {
             "hashes": [
@@ -133,10 +133,10 @@
         },
         "xmlschema": {
             "hashes": [
-                "sha256:88a20210d3c4d5a3e544da0fed5226bc71e51254daf6ebae398dc6864ad9c638",
-                "sha256:ade693114ff2e4a9ed5a2371ce29ae888f689bc58e326e5796f8a7dc8954dd4a"
+                "sha256:1ec178a7ff87933f44cb445eca66e7d977480664f6c6a17bda110816288eab8d",
+                "sha256:f372005d08dfc231ce7f001c3a7a2c7f7ae138295349268bc551a9df3c700b82"
             ],
-            "version": "==1.4.1"
+            "version": "==1.4.2"
         }
     },
     "develop": {
