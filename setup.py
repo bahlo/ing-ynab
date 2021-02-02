@@ -18,7 +18,7 @@ setup(
     keywords="ing ynab fints",
     packages=find_packages(exclude=["tests*"]),
     install_requires=[
-        "bleach==3.2.3; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'",
+        "bleach==3.3.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'",
         "certifi==2020.12.5",
         "chardet==4.0.0",
         "elementpath==2.1.3",
