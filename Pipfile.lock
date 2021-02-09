@@ -133,10 +133,10 @@
         },
         "xmlschema": {
             "hashes": [
-                "sha256:1ec178a7ff87933f44cb445eca66e7d977480664f6c6a17bda110816288eab8d",
-                "sha256:f372005d08dfc231ce7f001c3a7a2c7f7ae138295349268bc551a9df3c700b82"
+                "sha256:81dcc709d033127cb7b89c7d91712f6c701414ed27b616ebd26e76896de1118d",
+                "sha256:eae929e10f18c497ae52058919db63e39825bb0777faacff7c5d4d2f68248eee"
             ],
-            "version": "==1.4.2"
+            "version": "==1.5.0"
         }
     },
     "develop": {
