@@ -34,7 +34,7 @@ setup(
         "text-unidecode==1.3",
         "urllib3==1.25.10; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4' and python_version < '4'",
         "webencodings==0.5.1",
-        "xmlschema==1.5.0",
+        "xmlschema==1.5.1",
     ],
     dependency_links=[],
     python_requires=">=3.8",
