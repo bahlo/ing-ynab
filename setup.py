@@ -27,7 +27,7 @@ setup(
         "mt-940==4.23.0",
         "packaging==20.9; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
         "pyparsing==2.4.7; python_version >= '2.6' and python_version not in '3.0, 3.1, 3.2, 3.3'",
-        "python-dotenv==0.17.0",
+        "python-dotenv==0.17.1",
         "requests==2.25.1",
         "sepaxml==2.4.1",
         "six==1.15.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
