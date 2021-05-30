@@ -9,7 +9,7 @@ from fints.client import FinTS3PinTanClient
 from fints.models import SEPAAccount
 
 ING_DE_BLZ = "50010517"
-ING_DE_ENDPOINT = "https://fints.ing-diba.de/fints/"
+ING_DE_ENDPOINT = "https://fints.ing.de/fints/"
 
 
 class AccountNotFoundException(Exception):
