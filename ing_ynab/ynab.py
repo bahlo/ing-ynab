@@ -71,8 +71,16 @@ class YNABClient:
                 transaction_date = date.today()
 
             milliunits_amount = int(data["amount"].amount * Decimal("1000.0"))
-            similar_transactions = [x for x in transformed if date.fromisoformat(x["date"]) == transaction_date and x["amount"] == milliunits_amount]
+            similar_transactions = [
+                x
+                for x in transformed
+                if date.fromisoformat(x["date"]) == transaction_date
+                and x["amount"] == milliunits_amount
+            ]
             occurence = len(similar_transactions) + 1
+            import_id = (
+                f"YNAB:{milliunits_amount}:{transaction_date.isoformat()}:{occurence}"
+            )
 
             transformed.append(
                 {
@@ -83,7 +91,7 @@ class YNABClient:
                     "cleared": "cleared",
                     "memo": data["purpose"],
                     "flag_color": self.flag_color,
-                    "import_id": f"YNAB:{milliunits_amount}:{transaction_date.isoformat()}:{occurence}",
+                    "import_id": import_id,
                 }
             )
         return transformed
