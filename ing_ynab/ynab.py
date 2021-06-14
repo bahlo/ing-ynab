@@ -1,7 +1,7 @@
 """
 Provides methods to work with the YNAB API.
 """
-from datetime import datetime
+from datetime import date
 from decimal import Decimal
 from typing import List, Optional, Dict
 from mt940.models import Transaction as FinTSTransaction
@@ -66,19 +66,32 @@ class YNABClient:
             # ING sometimes adds transactions that are dated to the future.
             # YNAB doesn't support this, so since the transaction already
             # happened anyway, we're overriding the date.
-            date = data["date"]
-            if date > datetime.now():
-                date = datetime.now()
+            transaction_date = data["date"]
+            if transaction_date > date.today():
+                transaction_date = date.today()
+
+            milliunits_amount = int(data["amount"].amount * Decimal("1000.0"))
+            similar_transactions = [
+                x
+                for x in transformed
+                if date.fromisoformat(x["date"]) == transaction_date
+                and x["amount"] == milliunits_amount
+            ]
+            occurence = len(similar_transactions) + 1
+            import_id = (
+                f"YNAB:{milliunits_amount}:{transaction_date.isoformat()}:{occurence}"
+            )
 
             transformed.append(
                 {
                     "account_id": self.account_id,
-                    "date": date.isoformat(),
-                    "amount": int(data["amount"].amount * Decimal("1000.0")),
+                    "date": transaction_date.isoformat(),
+                    "amount": milliunits_amount,
                     "payee_name": data["applicant_name"],
                     "cleared": "cleared",
                     "memo": data["purpose"],
                     "flag_color": self.flag_color,
+                    "import_id": import_id,
                 }
             )
         return transformed
