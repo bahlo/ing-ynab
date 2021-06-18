@@ -21,7 +21,7 @@ setup(
         "bleach==3.3.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'",
         "certifi==2021.5.30",
         "chardet==4.0.0",
-        "elementpath==2.2.2",
+        "elementpath==2.2.3",
         "fints==3.0.1",
         "idna==2.10; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
         "mt-940==4.23.0",
