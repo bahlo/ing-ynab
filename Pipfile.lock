@@ -251,7 +251,7 @@
                 "sha256:eed17b53c3e7912425579853d078a0832820f023191561fcee9d7cae424e0813",
                 "sha256:f65ce5bd4cbc6abdfbe29afc2f0245538ab358c14590912df638033f157d555e"
             ],
-            "markers": "python_version < '4.0' and python_full_version >= '3.6.1'",
+            "markers": "python_version < '4' and python_full_version >= '3.6.1'",
             "version": "==5.9.2"
         },
         "lazy-object-proxy": {
