@@ -13,6 +13,7 @@ pipenv-setup = "*"
 requests = "*"
 fints = "*"
 python-dotenv = "*"
+chardet = "*"
 
 [requires]
 python_version = "3.8"
