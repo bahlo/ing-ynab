@@ -141,11 +141,11 @@
         },
         "xmlschema": {
             "hashes": [
-                "sha256:577ac82b89f6de354fb59abb544a77a41a282763ecb29843ea9e113693080c58",
-                "sha256:fadf79756080c3a3a3a380ad54b6b5bd8fa7b2f5bedfde56909812b291a6237f"
+                "sha256:66a17ba8c342703a9d01f5014898e09969e5f5907d0aa9ca06f19c6aa83af6c5",
+                "sha256:dd3917141a98f3cebb91dd2cfd0ec5476a8ac5073cea52dfe3050c5c04891169"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==1.6.4"
+            "version": "==1.7.0"
         }
     },
     "develop": {
