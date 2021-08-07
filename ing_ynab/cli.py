@@ -15,15 +15,14 @@ from ing_ynab.ing import INGClient, AccountNotFoundException
 
 
 def ing_to_ynab(
-    start_date: datetime.datetime,
-    ing_client: INGClient,
-    ynab_client: YNABClient,
-    debug: bool = False,
+    ing_client: INGClient, ynab_client: YNABClient, debug: bool = False,
 ) -> NoReturn:
     """
     This code is called in a predefined interval to add new ing transactions
     into ynab.
     """
+    start_date = ynab_client.latest_transaction_date()
+
     transactions = ing_client.get_transactions(start_date=start_date)
 
     if len(transactions) == 0:
@@ -65,11 +64,6 @@ def main() -> int:
     ynab_budget_id = os.environ["YNAB_BUDGET_ID"]
     ynab_flag_color = os.environ.get("YNAB_FLAG_COLOR")
 
-    start_date = None
-    start_date_env = os.environ.get("START_DATE")
-    if start_date_env is not None:
-        start_date = datetime.fromisoformat(start_date_env)
-
     sleep_interval = int(os.environ.get("SLEEP_INTERVAL_SECONDS", "300"))
 
     # Create INGClient
@@ -94,7 +88,7 @@ def main() -> int:
     # Import new statements into YNAB every n minutes
     while True:
         try:
-            ing_to_ynab(start_date, ing_client, ynab_client, debug=debug)
+            ing_to_ynab(ing_client, ynab_client, debug=debug)
         except YNABError as ex:
             print("Could not import transactions: %s" % ex)
         except KeyboardInterrupt:
