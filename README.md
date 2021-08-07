@@ -65,7 +65,7 @@ services:
 The configuration is done via environment variables:
 
 * `START_DATE`: The date to start getting transactions (defaults to today).
-* `SLEEP_INTERVAL`: Interval in seconds until the next check happens 
+* `SLEEP_INTERVAL_SECONDS`: Interval in seconds until the next check happens 
   (defaults to 5 minutes).
 * `FINTS_PRODUCT_ID`: Your FinTS product ID (deafults to python-fints one).
 * `ING_LOGIN`: The login id of your ING account.

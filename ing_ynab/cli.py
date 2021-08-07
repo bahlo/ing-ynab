@@ -70,7 +70,7 @@ def main() -> int:
     if start_date_env is not None:
         start_date = datetime.fromisoformat(start_date_env)
 
-    interval = int(os.environ.get("SLEEP_INTERVAL", "300"))
+    sleep_interval = int(os.environ.get("SLEEP_INTERVAL_SECONDS", "300"))
 
     # Create INGClient
     ing_client = INGClient(
@@ -101,5 +101,5 @@ def main() -> int:
             raise  # We need to have this case for ^C to work
         except:  # pylint: disable=bare-except
             print("Unexpected error:", sys.exc_info()[0])
-        print("Sleeping for %d seconds" % interval)
-        sleep(interval)
+        print("Sleeping for %d seconds" % sleep_interval)
+        sleep(sleep_interval)
