@@ -10,7 +10,7 @@ Import your ING Germany bank statements via FinTS into YNAB.
 ## Setup
 
 Before setting this up, please 
-[register your FinTS product](https://www.hbci-zka.de/register/prod_register.htm) 
+[register your FinTS product](#how-do-i-register-the-fints-product) 
 – it's free and takes only a few days.  
 If you don't do this, the application will fallback to the product id from the
 [python-fints](https://python-fints.readthedocs.io) library, which should only
@@ -112,3 +112,14 @@ functionality.
 The [python-fints](https://github.com/raphaelm/python-fints) library supports
 a lot of banks, so probably. But we need to work together as I can't test it.
 Feel free to get in touch: <hallo@arne.me>
+
+### How do I register the FinTS product?
+1. Go to the [FinTS product registration](https://www.hbci-zka.de/register/prod_register.htm)
+2. Click `Registrierungsprozess` to get to a PDF form
+3. Fill in your data. If you don't know what else to put, here are some suggestions:
+   * `Firmenbezeichnung`: Your name
+   * `Produktname`: `ing-ynab`
+   * `Produktkategorie`: `Web-Server`
+4. Send the form to the email adress on the last page
+
+After a week or two you will get your product id via email.
