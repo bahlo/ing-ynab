@@ -11,22 +11,20 @@ from getpass import getpass
 from dotenv import load_dotenv
 
 from ing_ynab.ynab import YNABClient, YNABError
-from ing_ynab.ing import INGClient, AccountNotFoundException, hash_transaction
-from ing_ynab.state import State
+from ing_ynab.ing import INGClient, AccountNotFoundException
 
 
 def ing_to_ynab(
-    state: State, ing_client: INGClient, ynab_client: YNABClient, debug: bool = False,
+    start_date: datetime.datetime,
+    ing_client: INGClient,
+    ynab_client: YNABClient,
+    debug: bool = False,
 ) -> NoReturn:
     """
     This code is called in a predefined interval to add new ing transactions
     into ynab.
     """
-    start_date, last_hash = state.restore()
-
-    transactions = ing_client.get_transactions(
-        start_date=start_date, last_hash=last_hash
-    )
+    transactions = ing_client.get_transactions(start_date=start_date)
 
     if len(transactions) == 0:
         print("No new transactions found")
@@ -42,8 +40,6 @@ def ing_to_ynab(
     else:
         imported = ynab_client.import_transactions(ynab_transactions)
         print("Imported %d new transaction(s)" % len(imported))
-
-    state.store(hash_transaction(transactions[len(transactions) - 1]))
 
 
 def main() -> int:
@@ -95,12 +91,10 @@ def main() -> int:
         ynab_access_token, ynab_account_id, ynab_budget_id, flag_color=ynab_flag_color
     )
 
-    state = State("state", start_date)
-
     # Import new statements into YNAB every n minutes
     while True:
         try:
-            ing_to_ynab(state, ing_client, ynab_client, debug=debug)
+            ing_to_ynab(start_date, ing_client, ynab_client, debug=debug)
         except YNABError as ex:
             print("Could not import transactions: %s" % ex)
         except KeyboardInterrupt:
@@ -109,5 +103,3 @@ def main() -> int:
             print("Unexpected error:", sys.exc_info()[0])
         print("Sleeping for %d seconds" % interval)
         sleep(interval)
-
-    return 0
