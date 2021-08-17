@@ -37,13 +37,13 @@ setup(
         "xmlschema==1.7.0",
     ],
     dependency_links=[],
-    python_requires=">=3.8",
+    python_requires=">=3.7",
     entry_points={"console_scripts": ["ing-ynab=ing_ynab.cli:main"]},
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: End Users/Desktop",
         "License :: OSI Approved :: MIT License",
-        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.7",
         "Typing :: Typed",
     ],
 )

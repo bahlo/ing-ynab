@@ -28,7 +28,7 @@ There are various ways to start the application:
 
 ### Local
 
-This can be run on any environment with Python 3.8 or higher.
+This can be run on any environment with Python 3.7 or higher.
 
 ```sh
 $ python3 -m pip install ing-ynab

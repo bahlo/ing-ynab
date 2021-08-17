@@ -16,7 +16,7 @@ jobs:
       - name: Setup
         uses: actions/setup-python@v2
         with:
-          python-version: "3.8"
+          python-version: "3.7"
       - name: Install and run linters
         run: |
           pip install pipenv
@@ -32,7 +32,7 @@ jobs:
       - name: Setup
         uses: actions/setup-python@v2
         with:
-          python-version: "3.8"
+          python-version: "3.7"
       - name: Verify dependencies
         run: |
           pip install pipenv
@@ -47,7 +47,7 @@ jobs:
       - name: Setup
         uses: actions/setup-python@v2
         with:
-          python-version: "3.8"
+          python-version: "3.7"
       - name: Install and run pytest
         run: |
           pip install pipenv
@@ -93,7 +93,7 @@ jobs:
       - name: Setup
         uses: actions/setup-python@v2
         with:
-          python-version: "3.8"
+          python-version: "3.7"
       - name: Build module
         run: |
           pip3 install setuptools wheel
