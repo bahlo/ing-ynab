@@ -1,7 +1,7 @@
 """
 This module contains the core business logic.
 """
-from datetime import datetime
+from datetime import date, timedelta
 from time import sleep
 from typing import NoReturn
 import logging
@@ -21,7 +21,11 @@ def ing_to_ynab(
     This code is called in a predefined interval to add new ing transactions
     into ynab.
     """
-    start_date = ynab_client.latest_transaction_date()
+    start_date = None
+    if not debug:
+        start_date = ynab_client.latest_transaction_date()
+    if start_date is None:
+        start_date = date.today() - timedelta(days=7)
 
     transactions = ing_client.get_transactions(start_date=start_date)
 
