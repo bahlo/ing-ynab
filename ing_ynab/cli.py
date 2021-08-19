@@ -21,9 +21,7 @@ def ing_to_ynab(
     This code is called in a predefined interval to add new ing transactions
     into ynab.
     """
-    start_date = None
-    if not debug:
-        start_date = ynab_client.latest_transaction_date()
+    start_date = ynab_client.latest_transaction_date()
     if start_date is None:
         start_date = date.today() - timedelta(days=7)
 
@@ -61,7 +59,7 @@ def main() -> int:
         ing_pin = getpass("ING pin: ")
 
     ynab_access_token = os.environ.get("YNAB_ACCESS_TOKEN")
-    if ynab_access_token is None and not debug:
+    if ynab_access_token is None:
         ynab_access_token = getpass("YNAB Access Token: ")
 
     ynab_account_id = os.environ["YNAB_ACCOUNT_ID"]
