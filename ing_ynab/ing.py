@@ -60,4 +60,3 @@ class INGClient:
         return self.fints_client.get_transactions(
             self.selected_account, start_date=start_date
         )
-
