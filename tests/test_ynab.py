@@ -104,7 +104,7 @@ class TestTransformTransactions(unittest.TestCase):
                     },
                 ),
                 "expected": {
-                    "payee_name": "POSTSHOP (PayPal)",
+                    "payee_name": "PAYPAL POSTSHOP",
                     "memo": ". POSTSHOP, Ihr Einkauf bei POSTSHOP",
                 },
             },
@@ -119,7 +119,7 @@ class TestTransformTransactions(unittest.TestCase):
                     },
                 ),
                 "expected": {
-                    "payee_name": "GITHUB INC (PayPal)",
+                    "payee_name": "PAYPAL GITHUB INC",
                     "memo": "PP.0000.PP . GITHUB INC, Ihr Einkauf bei GITHUB INC",
                 },
             },
@@ -155,5 +155,5 @@ class TestTransformTransactions(unittest.TestCase):
                     )
                 ]
             )
-            self.assertEqual("GITHUB INC (PayPal)", transformed[0]["payee_name"])
+            self.assertEqual("PAYPAL GITHUB INC", transformed[0]["payee_name"])
 

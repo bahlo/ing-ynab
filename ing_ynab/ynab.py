@@ -89,7 +89,7 @@ class YNABClient:
             if PAYPAL_PAYEE_REGEX.match(data["applicant_name"]):
                 payee = PAYPAL_MEMO_REGEX.match(data["purpose"])
                 if payee is not None:
-                    data["applicant_name"] = payee.group(1) + " (PayPal)"
+                    data["applicant_name"] = "PAYPAL " + payee.group(1)
 
             transformed.append(
                 {
