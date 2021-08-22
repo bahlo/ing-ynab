@@ -56,6 +56,20 @@ class YNABClient:
             raise YNABError(body["error"]["detail"])
         return body["data"]["transaction_ids"]
 
+    def latest_transaction_date(self) -> Optional[date]:
+        """
+        Returns the date of the latest transaction.
+        """
+        headers = {"Authorization": "Bearer " + self.access_token}
+        path = "/budgets/" + self.budget_id + "/transactions"
+        response = requests.get(YNAB_BASE_URL + path, headers=headers)
+        body = response.json()
+        if response.status_code >= 400:
+            raise YNABError(body["error"]["detail"])
+        if not body["data"] or not body["data"]["transactions"]:
+            return None
+        return date.fromisoformat(body["data"]["transactions"][-1]["date"])
+
     def transform_transactions(
         self, transactions: List[FinTSTransaction],
     ) -> List[Dict[str, str]]:

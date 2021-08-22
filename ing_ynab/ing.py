@@ -2,7 +2,6 @@
 Provides classes and functions to work with the ING FinTS API.
 """
 import datetime
-from hashlib import sha256
 from typing import Optional, List
 from mt940.models import Transaction
 from fints.client import FinTS3PinTanClient
@@ -53,37 +52,11 @@ class INGClient:
             raise AccountNotFoundException(accounts)
 
     def get_transactions(
-        self,
-        start_date: Optional[datetime.datetime] = None,
-        last_hash: Optional[str] = None,
+        self, start_date: Optional[datetime.datetime] = None,
     ) -> List[Transaction]:
         """
         Get transactions for the selected account.
         """
-        transactions = self.fints_client.get_transactions(
+        return self.fints_client.get_transactions(
             self.selected_account, start_date=start_date
         )
-
-        array_start = 0
-        for i, transaction in enumerate(transactions):
-            if hash_transaction(transaction) == last_hash:
-                array_start = i + 1
-                break
-
-        transactions = transactions[array_start:]
-        return transactions
-
-
-def hash_transaction(transaction: Transaction) -> str:
-    """
-    Generate a hash for the transaction to make them identifiable.
-    """
-    data = transaction.data
-    payload = "%s:%s:%s:%s:%s" % (
-        data["date"],
-        data["applicant_name"],
-        data["purpose"],
-        data["amount"],
-        data.get("end_to_end_reference"),
-    )
-    return sha256(payload.encode("utf-8")).hexdigest()
