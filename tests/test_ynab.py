@@ -61,7 +61,7 @@ class TestTransformTransactions(unittest.TestCase):
         )
 
     def test_correct_import_id_occurence(self):
-        ynab_client = YNABClient("", "abcdef", "")
+        ynab_client = YNABClient("", "foo", "")
 
         transactions = [
             Transaction(
@@ -88,3 +88,72 @@ class TestTransformTransactions(unittest.TestCase):
         self.assertEqual(2, len(transformed))
         self.assertEqual(transformed[0]["import_id"], "YNAB:-42240:2020-06-13:1")
         self.assertEqual(transformed[1]["import_id"], "YNAB:-42240:2020-06-13:2")
+
+    def test_paypal_extraction(self):
+        ynab_client = YNABClient("", "foo", "")
+
+        tests = [
+            {
+                "transaction": Transaction(
+                    [],
+                    data={
+                        "date": date.fromisoformat("2020-08-18"),
+                        "applicant_name": "PayPal (Europe) S.a.r.l. et Cie., S.C.A.",
+                        "purpose": ". POSTSHOP, Ihr Einkauf bei POSTSHOP",
+                        "amount": Amount("1.55", "D"),
+                    },
+                ),
+                "expected": {
+                    "payee_name": "PAYPAL POSTSHOP",
+                    "memo": ". POSTSHOP, Ihr Einkauf bei POSTSHOP",
+                },
+            },
+            {
+                "transaction": Transaction(
+                    [],
+                    data={
+                        "date": date.fromisoformat("2020-08-18"),
+                        "applicant_name": "PayPal (Europe) S.a.r.l. et Cie., S.C.A.",
+                        "purpose": "PP.0000.PP . GITHUB INC, Ihr Einkauf bei GITHUB INC",
+                        "amount": Amount("4.99", "D"),
+                    },
+                ),
+                "expected": {
+                    "payee_name": "PAYPAL GITHUB INC",
+                    "memo": "PP.0000.PP . GITHUB INC, Ihr Einkauf bei GITHUB INC",
+                },
+            },
+        ]
+
+        for test in tests:
+            transformed = ynab_client.transform_transactions([test["transaction"]])
+            for key in test["expected"]:
+                self.assertEqual(test["expected"][key], transformed[0][key])
+
+    def test_paypal_applicant_names(self):
+        ynab_client = YNABClient("", "foo", "")
+
+        # For some reason, PayPal has a different payee names, test some of them
+        tests = [
+            "PayPal (Europe) S.a.r.l. et Cie., S.C.A.",
+            "PayPal (Europe) S.a.r.l. etCie., S.C.A.",
+            "PayPal (Europe) S.a.r.l.et Cie., S.C.A.",
+            "PayPal (Europe)S.a.r.l. et Cie., S.C.A.",
+            "PayPal(Europe) S.a.r.l. et Cie., S.C.A.",
+        ]
+        for test in tests:
+            transformed = ynab_client.transform_transactions(
+                [
+                    Transaction(
+                        [],
+                        data={
+                            "date": date.fromisoformat("2020-08-18"),
+                            "applicant_name": test,
+                            "purpose": "PP.0000.PP . GITHUB INC, Ihr Einkauf bei GITHUB INC",
+                            "amount": Amount("1.55", "D"),
+                        },
+                    )
+                ]
+            )
+            self.assertEqual("PAYPAL GITHUB INC", transformed[0]["payee_name"])
+

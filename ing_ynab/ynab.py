@@ -1,6 +1,7 @@
 """
 Provides methods to work with the YNAB API.
 """
+import re
 from datetime import date
 from decimal import Decimal
 from typing import List, Optional, Dict
@@ -8,6 +9,8 @@ from mt940.models import Transaction as FinTSTransaction
 import requests
 
 YNAB_BASE_URL = "https://api.youneedabudget.com/v1"
+PAYPAL_PAYEE_REGEX = re.compile(r"^PayPal\s?\(Europe\)")
+PAYPAL_MEMO_REGEX = re.compile(r".*, Ihr Einkauf bei (.*)$")
 
 
 class YNABError(Exception):
@@ -81,6 +84,12 @@ class YNABClient:
             import_id = (
                 f"YNAB:{milliunits_amount}:{transaction_date.isoformat()}:{occurence}"
             )
+
+            # If this is a PayPal transaction, try to get the Payee from the memo
+            if PAYPAL_PAYEE_REGEX.match(data["applicant_name"]):
+                payee = PAYPAL_MEMO_REGEX.match(data["purpose"])
+                if payee is not None:
+                    data["applicant_name"] = "PAYPAL " + payee.group(1)
 
             transformed.append(
                 {
