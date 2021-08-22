@@ -20,10 +20,6 @@ Since this application will need your ING pin and YNAB access token it's
 recommended to run this in your local network (could be a Raspberry Pi, it's 
 pretty light).
 
-The application writes the last date and a hash of the last imported transaction
-to a `state` file. If you use it in a container be sure to mount it to
-prevent duplicates.
-
 There are various ways to start the application:
 
 ### Local
@@ -40,10 +36,7 @@ $ ing-ynab
 
 ```sh
 $ cp .env.example .env # and customize fields
-$ docker run \
-    -v $PWD/ing_ynab_state:/app/state \
-    --env-file .env \
-    docker.pkg.github.com/bahlo/ing-ynab/ing-ynab:2.0.0
+$ docker run --env-file .env docker.pkg.github.com/bahlo/ing-ynab/ing-ynab:2.0.0
 ```
 
 ### docker-compose
@@ -54,8 +47,6 @@ version: "2.0"
 services:
   ing-ynab:
     image: docker.pkg.github.com/bahlo/ing-ynab/ing-ynab:2.0.0
-    volumes:
-      - ${PWD}/ing_ynab_state:/app/state
     environment:
       # Environment variables, see the configuration section
 ```
