@@ -80,12 +80,11 @@ class YNABClient:
         for transaction in transactions:
             data = transaction.data
 
-            # ING sometimes adds transactions that are dated to the future.
-            # YNAB doesn't support this, so since the transaction already
-            # happened anyway, we're overriding the date.
             transaction_date = data["date"]
             if transaction_date > date.today():
-                transaction_date = date.today()
+                # This is a future transaction, skip it. We'll import it at the
+                # day it actually occurs.
+                continue
 
             milliunits_amount = int(data["amount"].amount * Decimal("1000.0"))
             similar_transactions = [
