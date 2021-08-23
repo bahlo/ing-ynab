@@ -63,8 +63,8 @@ The configuration is done via environment variables:
 * `ING_PIN`: The pin of your ING account (leave empty to be prompted).
 * `YNAB_ACCESS_TOKEN`: Go to your budget settings to create one (leave empty
   to be prompted).
-* `YNAB_BUDGET_ID`: On the webpage of your budget the first uuid in the path (https://app.youneedabudget.com/**xxxxxxxx-ThIs-UuId-PlZs-xxxxxxxxxxxx**/budget/202109).
-* `YNAB_ACCOUNT_ID`: On the webpage of the bank account the last uuid in the path (https://app.youneedabudget.com/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/accounts/**xxxxxxxx-ThIs-UuId-PlZs-xxxxxxxxxxxx**).
+* `YNAB_BUDGET_ID`: On the webpage of your budget the first UUID in the path (https://app.youneedabudget.com/<BUDGET_UUID>/budget/202109).
+* `YNAB_ACCOUNT_ID`: On the webpage of the bank account the last UUID in the path (https://app.youneedabudget.com/<BUDGET_UUID>/accounts/<BANK_ACCOUNT_UUID>).
 * `YNAB_FLAG_COLOR`: If set, use that color for the imported transactions.
 * `DEBUG`: Set to `1` to enable debug output and print transactions instead of
   importing them.
