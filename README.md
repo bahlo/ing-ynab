@@ -36,7 +36,7 @@ $ ing-ynab
 
 ```sh
 $ cp .env.example .env # and customize fields
-$ docker run --env-file .env docker.pkg.github.com/bahlo/ing-ynab/ing-ynab:2.0.0
+$ docker run --env-file .env docker.pkg.github.com/bahlo/ing-ynab/ing-ynab:2.0.1
 ```
 
 ### docker-compose
@@ -46,7 +46,7 @@ version: "2.0"
 
 services:
   ing-ynab:
-    image: docker.pkg.github.com/bahlo/ing-ynab/ing-ynab:2.0.0
+    image: docker.pkg.github.com/bahlo/ing-ynab/ing-ynab:2.0.1
     environment:
       # Environment variables, see the configuration section
 ```
