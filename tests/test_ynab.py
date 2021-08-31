@@ -94,6 +94,7 @@ class TestTransformTransactions(unittest.TestCase):
 
         tests = [
             {
+                "name": "no pp",
                 "transaction": Transaction(
                     [],
                     data={
@@ -109,6 +110,7 @@ class TestTransformTransactions(unittest.TestCase):
                 },
             },
             {
+                "name": "pp",
                 "transaction": Transaction(
                     [],
                     data={
@@ -123,12 +125,46 @@ class TestTransformTransactions(unittest.TestCase):
                     "memo": "PP.0000.PP . GITHUB INC, Ihr Einkauf bei GITHUB INC",
                 },
             },
+            {
+                "name": "linebreak",
+                "transaction": Transaction(
+                    [],
+                    data={
+                        "date": date.fromisoformat("2020-08-18"),
+                        "applicant_name": "PayPal (Europe) S.a.r.l. et Cie., S.C.A.",
+                        "purpose": "PP.0000.PP . GITHUB INC, Ihr Einkauf be\ni GITHUB INC",
+                        "amount": Amount("4.99", "D"),
+                    },
+                ),
+                "expected": {
+                    "payee_name": "PAYPAL GITHUB INC",
+                    "memo": "PP.0000.PP . GITHUB INC, Ihr Einkauf be\ni GITHUB INC",
+                },
+            },
+            {
+                "name": "missing space",
+                "transaction": Transaction(
+                    [],
+                    data={
+                        "date": date.fromisoformat("2020-08-18"),
+                        "applicant_name": "PayPal (Europe) S.a.r.l. et Cie., S.C.A.",
+                        "purpose": "PP.0000.PP . GITHUB INC, Ihr Einkauf beiGITHUB INC",
+                        "amount": Amount("4.99", "D"),
+                    },
+                ),
+                "expected": {
+                    "payee_name": "PAYPAL GITHUB INC",
+                    "memo": "PP.0000.PP . GITHUB INC, Ihr Einkauf beiGITHUB INC",
+                },
+            },
         ]
 
         for test in tests:
             transformed = ynab_client.transform_transactions([test["transaction"]])
             for key in test["expected"]:
-                self.assertEqual(test["expected"][key], transformed[0][key])
+                self.assertEqual(
+                    test["expected"][key], transformed[0][key], test["name"]
+                )
 
     def test_paypal_applicant_names(self):
         ynab_client = YNABClient("", "foo", "")
@@ -156,4 +192,3 @@ class TestTransformTransactions(unittest.TestCase):
                 ]
             )
             self.assertEqual("PAYPAL GITHUB INC", transformed[0]["payee_name"])
-

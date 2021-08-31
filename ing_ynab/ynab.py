@@ -10,7 +10,7 @@ import requests
 
 YNAB_BASE_URL = "https://api.youneedabudget.com/v1"
 PAYPAL_PAYEE_REGEX = re.compile(r"^PayPal\s?\(Europe\)")
-PAYPAL_MEMO_REGEX = re.compile(r".*, Ihr Einkauf bei (.*)$")
+PAYPAL_MEMO_REGEX = re.compile(r".*, Ihr Einkauf be\n?i\s?(.*)$")
 
 
 class YNABError(Exception):
