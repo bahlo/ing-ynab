@@ -49,11 +49,11 @@
         },
         "elementpath": {
             "hashes": [
-                "sha256:60139b91ef9646e27381fd62b8c38f1fc8ebc78dc4bc231c08c51240062e58e6",
-                "sha256:f27d7c045c4f1f30d078f67ea7b0105d771708bd00106f28b3cabe075087bff4"
+                "sha256:0e5863f22634c52e1c66c9c3ca5d12b54b653d20fff23143b7b5bce2304a086d",
+                "sha256:62eb0dd99699ea3654509945131b32c948d8403fc2e125b2b4270ba06d947692"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==2.2.3"
+            "version": "==2.3.0"
         },
         "fints": {
             "hashes": [
