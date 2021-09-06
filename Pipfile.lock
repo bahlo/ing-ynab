@@ -149,11 +149,11 @@
         },
         "xmlschema": {
             "hashes": [
-                "sha256:66a17ba8c342703a9d01f5014898e09969e5f5907d0aa9ca06f19c6aa83af6c5",
-                "sha256:dd3917141a98f3cebb91dd2cfd0ec5476a8ac5073cea52dfe3050c5c04891169"
+                "sha256:bdf7a37a6477ebc152dd755f6b33f1a786ef0d4693b1565b91635aa7984d89be",
+                "sha256:e2292928b0b8d459ad64c48aedc7685d532e681e0a5096a20a80f8f48b7dd6ed"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==1.7.0"
+            "version": "==1.7.1"
         }
     },
     "develop": {
@@ -267,7 +267,7 @@
                 "sha256:9c2ea1e62d871267b78307fe511c0838ba0da28698c5732d54e2790bf3ba9899",
                 "sha256:e17d6e2b81095c9db0a03a8025a957f334d6ea30b26f9ec70805411e5c7c81f2"
             ],
-            "markers": "python_version < '4' and python_full_version >= '3.6.1'",
+            "markers": "python_version < '4.0' and python_full_version >= '3.6.1'",
             "version": "==5.9.3"
         },
         "lazy-object-proxy": {
