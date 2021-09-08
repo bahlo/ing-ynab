@@ -106,7 +106,6 @@ class TestTransformTransactions(unittest.TestCase):
                 ),
                 "expected": {
                     "payee_name": "PAYPAL POSTSHOP",
-                    "memo": ". POSTSHOP, Ihr Einkauf bei POSTSHOP",
                 },
             },
             {
@@ -122,7 +121,6 @@ class TestTransformTransactions(unittest.TestCase):
                 ),
                 "expected": {
                     "payee_name": "PAYPAL GITHUB INC",
-                    "memo": "PP.0000.PP . GITHUB INC, Ihr Einkauf bei GITHUB INC",
                 },
             },
             {
@@ -138,11 +136,10 @@ class TestTransformTransactions(unittest.TestCase):
                 ),
                 "expected": {
                     "payee_name": "PAYPAL GITHUB INC",
-                    "memo": "PP.0000.PP . GITHUB INC, Ihr Einkauf be\ni GITHUB INC",
                 },
             },
             {
-                "name": "missing space",
+                "name": "missing space after bei",
                 "transaction": Transaction(
                     [],
                     data={
@@ -154,7 +151,36 @@ class TestTransformTransactions(unittest.TestCase):
                 ),
                 "expected": {
                     "payee_name": "PAYPAL GITHUB INC",
-                    "memo": "PP.0000.PP . GITHUB INC, Ihr Einkauf beiGITHUB INC",
+                },
+            },
+            {
+                "name": "missing space before bei",
+                "transaction": Transaction(
+                    [],
+                    data={
+                        "date": date.fromisoformat("2020-08-18"),
+                        "applicant_name": "PayPal (Europe) S.a.r.l. et Cie., S.C.A.",
+                        "purpose": "PP.0000.PP . GITHUB INC, Ihr Einkaufbei GITHUB INC",
+                        "amount": Amount("4.99", "D"),
+                    },
+                ),
+                "expected": {
+                    "payee_name": "PAYPAL GITHUB INC",
+                },
+            },
+            {
+                "name": "lastschrift",
+                "transaction": Transaction(
+                    [],
+                    data={
+                        "date": date.fromisoformat("2020-08-18"),
+                        "applicant_name": "PayPal (Europe) S.a.r.l. et Cie., S.C.A.",
+                        "purpose": "PP.0000.PP . PAYPAL.ZAHLUNG UBER LASTSCHRIFT an GITHUB INC",
+                        "amount": Amount("4.99", "D"),
+                    },
+                ),
+                "expected": {
+                    "payee_name": "PAYPAL GITHUB INC",
                 },
             },
         ]

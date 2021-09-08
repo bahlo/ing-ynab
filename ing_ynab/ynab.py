@@ -10,7 +10,9 @@ import requests
 
 YNAB_BASE_URL = "https://api.youneedabudget.com/v1"
 PAYPAL_PAYEE_REGEX = re.compile(r"^PayPal\s?\(Europe\)")
-PAYPAL_MEMO_REGEX = re.compile(r".*, Ihr Einkauf be\n?i\s?(.*)$")
+PAYPAL_MEMO_REGEX = re.compile(
+    r".*(, Ihr Einkauf\s?be\n?i\s?|PAYPAL.ZAHLUNG UBER LASTSCHRIFT an )(.*)$"
+)
 
 
 class YNABError(Exception):
@@ -102,7 +104,7 @@ class YNABClient:
             if PAYPAL_PAYEE_REGEX.match(data["applicant_name"]):
                 payee = PAYPAL_MEMO_REGEX.match(data["purpose"])
                 if payee is not None:
-                    data["applicant_name"] = "PAYPAL " + payee.group(1)
+                    data["applicant_name"] = "PAYPAL " + payee.group(2)
 
             transformed.append(
                 {
