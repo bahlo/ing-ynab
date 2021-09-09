@@ -3,7 +3,7 @@ This module contains the core business logic.
 """
 from datetime import date, timedelta
 from time import sleep
-from typing import NoReturn
+from typing import NoReturn, Optional
 import logging
 import os
 import sys
