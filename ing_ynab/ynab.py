@@ -11,8 +11,9 @@ import requests
 YNAB_BASE_URL = "https://api.youneedabudget.com/v1"
 PAYPAL_PAYEE_REGEX = re.compile(r"^PayPal\s?\(Europe\)")
 PAYPAL_MEMO_REGEX = re.compile(
-    r".*(, Ihr Einkauf\s?be\n?i\s?|PAYPAL.ZAHLUNG UBER LASTSCHRIFT an )(.*)$"
+    r".*(,\s?Ihr Einkauf\s?be\n?i\s?|PAYPAL.ZAHLUNG UBER LASTSCHRIFT an )(.*)$"
 )
+PAYPAL_SUFFIX = "ABBUCHUNG VOM PAYPAL.KONTO"
 
 
 class YNABError(Exception):
@@ -104,7 +105,10 @@ class YNABClient:
             if PAYPAL_PAYEE_REGEX.match(data["applicant_name"]):
                 payee = PAYPAL_MEMO_REGEX.match(data["purpose"])
                 if payee is not None:
-                    data["applicant_name"] = "PAYPAL " + payee.group(2)
+                    payee = payee.group(2)
+                    if payee.endswith(PAYPAL_SUFFIX):
+                        payee = payee[:-len(PAYPAL_SUFFIX)]
+                    data["applicant_name"] = "PAYPAL " + payee
 
             transformed.append(
                 {

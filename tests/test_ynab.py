@@ -183,6 +183,36 @@ class TestTransformTransactions(unittest.TestCase):
                     "payee_name": "PAYPAL GITHUB INC",
                 },
             },
+            {
+                "name": "lastschrift",
+                "transaction": Transaction(
+                    [],
+                    data={
+                        "date": date.fromisoformat("2020-08-18"),
+                        "applicant_name": "PayPal (Europe) S.a.r.l. et Cie., S.C.A.",
+                        "purpose": "PP.0000.PP . iTunes and App Store,Ihr Einkauf beiiTunes and App Store",
+                        "amount": Amount("4.99", "D"),
+                    },
+                ),
+                "expected": {
+                    "payee_name": "PAYPAL iTunes and App Store",
+                },
+            },
+            {
+                "name": "lastschrift",
+                "transaction": Transaction(
+                    [],
+                    data={
+                        "date": date.fromisoformat("2020-08-18"),
+                        "applicant_name": "PayPal (Europe) S.a.r.l. et Cie., S.C.A.",
+                        "purpose": ". PAYPAL.ZAHLUNG UBER LASTSCHRIFT an example.orgABBUCHUNG VOM PAYPAL.KONTO",
+                        "amount": Amount("4.99", "D"),
+                    },
+                ),
+                "expected": {
+                    "payee_name": "PAYPAL example.org",
+                },
+            },
         ]
 
         for test in tests:
