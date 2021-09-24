@@ -107,7 +107,7 @@ class YNABClient:
                 if payee is not None:
                     payee = payee.group(2)
                     if payee.endswith(PAYPAL_SUFFIX):
-                        payee = payee[:-len(PAYPAL_SUFFIX)]
+                        payee = payee[: -len(PAYPAL_SUFFIX)]
                     data["applicant_name"] = "PAYPAL " + payee
 
             transformed.append(
