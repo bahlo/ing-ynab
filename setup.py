@@ -23,7 +23,7 @@ setup(
         "chardet==4.0.0",
         "elementpath==2.3.2",
         "fints==3.0.1",
-        "idna==3.2; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
+        "idna==3.3; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
         "mt-940==4.23.0",
         "packaging==21.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
         "pyparsing==2.4.7; python_version >= '2.6' and python_version not in '3.0, 3.1, 3.2, 3.3'",
