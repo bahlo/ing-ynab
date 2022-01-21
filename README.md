@@ -1,3 +1,9 @@
+:warning: Unmaintained. YNAB now supports
+[linking](https://docs.youneedabudget.com/article/172-link-account) your ING
+Account directly in their app.
+
+----
+
 ![ing-ynab logo](logo.jpg)
 
 [![ci](https://github.com/bahlo/fints_ynab/workflows/ci/badge.svg)](https://github.com/bahlo/ing-ynab/actions?query=workflow%3Aci)
