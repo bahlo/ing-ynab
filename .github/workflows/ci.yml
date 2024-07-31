@@ -30,6 +30,7 @@ jobs:
         with:
           python-version: "3.12"
       - uses: pdm-project/setup-pdm@v3
+      - run: pdm sync -d
       - run: pdm run pytest
   docker:
     name: Docker
