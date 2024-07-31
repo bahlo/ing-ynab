@@ -1,6 +1,7 @@
 """
 This module contains the core business logic.
 """
+
 from datetime import date, timedelta
 from time import sleep
 from typing import NoReturn
@@ -8,14 +9,15 @@ import logging
 import os
 import sys
 from getpass import getpass
-from dotenv import load_dotenv
 
-from ing_ynab.ynab import YNABClient, YNABError
-from ing_ynab.ing import INGClient, AccountNotFoundException
+from .ynab import YNABClient, YNABError
+from .ing import INGClient, AccountNotFoundException
 
 
 def ing_to_ynab(
-    ing_client: INGClient, ynab_client: YNABClient, debug: bool = False,
+    ing_client: INGClient,
+    ynab_client: YNABClient,
+    debug: bool = False,
 ) -> NoReturn:
     """
     This code is called in a predefined interval to add new ing transactions
@@ -47,8 +49,6 @@ def main() -> int:
     """
     Start the main business logic.
     """
-    load_dotenv()
-
     # Parse environment variables
     debug = os.environ.get("DEBUG") == "1"
     if debug:
@@ -95,7 +95,7 @@ def main() -> int:
             print("Could not import transactions: %s" % ex)
         except KeyboardInterrupt:
             raise  # We need to have this case for ^C to work
-        except:  # pylint: disable=bare-except
+        except Exception as _e:
             print("Unexpected error:", sys.exc_info()[0])
         print("Sleeping for %d seconds" % sleep_interval)
         sleep(sleep_interval)

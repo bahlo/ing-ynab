@@ -1,7 +1,14 @@
-FROM python:3.7
+ARG PYTHON_BASE=3.12-slim
+FROM python:$PYTHON_BASE AS builder
+RUN pip install -U pdm
+ENV PDM_CHECK_UPDATE=false
+COPY pyproject.toml pdm.lock README.md /project/
+COPY src/ /project/src
+WORKDIR /project
+RUN pdm install --check --prod --no-editable
 
-COPY . /app
-WORKDIR /app
-RUN pip install .
-
-CMD ["ing-ynab"]
+FROM python:$PYTHON_BASE
+COPY --from=builder /project/.venv/ /project/.venv
+ENV PATH="/project/.venv/bin:$PATH"
+COPY src /project/src
+CMD ["python", "src/__main__.py"]

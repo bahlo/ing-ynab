@@ -1,6 +1,7 @@
 """
 Provides classes and functions to work with the ING FinTS API.
 """
+
 import datetime
 from typing import Optional, List
 from mt940.models import Transaction
@@ -33,7 +34,11 @@ class INGClient:
 
     def __init__(self, login: str, pin: str, fints_product_id: Optional[str] = None):
         self.fints_client = FinTS3PinTanClient(
-            ING_DE_BLZ, login, pin, ING_DE_ENDPOINT, product_id=fints_product_id,
+            ING_DE_BLZ,
+            login,
+            pin,
+            ING_DE_ENDPOINT,
+            product_id=fints_product_id,
         )
 
     def select_account(self, iban: str) -> None:
@@ -52,7 +57,8 @@ class INGClient:
             raise AccountNotFoundException(accounts)
 
     def get_transactions(
-        self, start_date: Optional[datetime.datetime] = None,
+        self,
+        start_date: Optional[datetime.datetime] = None,
     ) -> List[Transaction]:
         """
         Get transactions for the selected account.
