@@ -1,6 +1,7 @@
 """
 Provides methods to work with the YNAB API.
 """
+
 import re
 from datetime import date
 from decimal import Decimal
@@ -74,7 +75,8 @@ class YNABClient:
         return date.fromisoformat(body["data"]["transactions"][-1]["date"])
 
     def transform_transactions(
-        self, transactions: List[FinTSTransaction],
+        self,
+        transactions: List[FinTSTransaction],
     ) -> List[Dict[str, str]]:
         """
         Transform the FinTS transactions into something the YNAB API understands.

@@ -14,7 +14,7 @@ build-backend = "pdm.backend"
 
 
 [tool.pdm]
-distribution = false
+distribution = true
 
 [tool.pdm.resolution]
 allow-prereleases = true
@@ -25,7 +25,7 @@ url = "https://pypi.python.org/simple"
 verify_ssl = true
 
 [tool.pdm.dev-dependencies]
-dev = ["pylint", "black", "pytest", "pipenv-setup"]
+dev = ["pytest", "ruff"]
 
 [tool.pdm.scripts]
 start = { shell = "cd src && python -m ing_ynab" }
