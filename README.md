@@ -26,7 +26,7 @@ $ pdm run start
 ```
 
 Alternatively you can use the Docker image from `ghcr.io/bahlo/ing-ynab:latest`
-or `ghcr.io/bahlo/ing-ynab:3.0.0`.
+or `ghcr.io/bahlo/ing-ynab:3.0.1`.
 
 ## Configuration
 
