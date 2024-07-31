@@ -11,4 +11,5 @@ FROM python:$PYTHON_BASE
 COPY --from=builder /project/.venv/ /project/.venv
 ENV PATH="/project/.venv/bin:$PATH"
 COPY src /project/src
-CMD ["python", "src/__main__.py"]
+WORKDIR /project/src
+CMD ["python", "-m", "ing_ynab"]
