@@ -5,7 +5,7 @@
 groups = ["default", "dev"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:e05c8eab546ae5ad84436bb21c5924183c819894755276877cbd6ffe25cdc508"
+content_hash = "sha256:cc44da23aba3c0adde28394de612125059ef4f89afcb7639d3c1b6b87013cd69"
 
 [[metadata.targets]]
 requires_python = ">=3.7"
@@ -160,7 +160,7 @@ files = [
 
 [[package]]
 name = "enum-tools"
-version = "0.9.0.post1"
+version = "0.12.0"
 requires_python = ">=3.6"
 summary = "Tools to expand Python's enum module."
 groups = ["default"]
@@ -169,8 +169,8 @@ dependencies = [
     "typing-extensions>=3.7.4.3",
 ]
 files = [
-    {file = "enum_tools-0.9.0.post1-py3-none-any.whl", hash = "sha256:d8fd962054e7e400fa7f0a196f7607f19ef78aca4b288543ecb330f890edb60d"},
-    {file = "enum_tools-0.9.0.post1.tar.gz", hash = "sha256:e59eb1c16667400b185f8a61ac427029919be2ec48b9ca04aa1b388a42fb14d5"},
+    {file = "enum_tools-0.12.0-py3-none-any.whl", hash = "sha256:d69b019f193c7b850b17d9ce18440db7ed62381571409af80ccc08c5218b340a"},
+    {file = "enum_tools-0.12.0.tar.gz", hash = "sha256:13ceb9376a4c5f574a1e7c5f9c8eb7f3d3fbfbb361cc18a738df1a58dfefd460"},
 ]
 
 [[package]]
@@ -187,19 +187,18 @@ files = [
 
 [[package]]
 name = "fints"
-version = "4.1.0"
+version = "4.0.0"
 summary = "Pure-python FinTS 3.0 (formerly known as HBCI) implementation"
 groups = ["default"]
 dependencies = [
     "bleach",
-    "enum-tools~=0.9.0",
     "mt-940",
     "requests",
     "sepaxml~=2.1",
 ]
 files = [
-    {file = "fints-4.1.0-py3-none-any.whl", hash = "sha256:9754b747d07b74b841f70deeb637413f782379a42f60dec4ce95b73336b6a78e"},
-    {file = "fints-4.1.0.tar.gz", hash = "sha256:a3701422c7c145af3201a98ceeb752fb18951c323bab7edbb724b8a2874fdf59"},
+    {file = "fints-4.0.0-py3-none-any.whl", hash = "sha256:46a8d2f001d4f94dc34e94facc90a6e0f0e24e81bee0cd63354dbc912e06a1e7"},
+    {file = "fints-4.0.0.tar.gz", hash = "sha256:6ec610362283e02ddf30ca60635b73895f4580f8089aec8285bed4d51851f1e1"},
 ]
 
 [[package]]
