@@ -42,7 +42,7 @@ def ing_to_ynab(
             print(transaction)
     else:
         imported = ynab_client.import_transactions(ynab_transactions)
-        print("Imported %d new transaction(s)" % len(imported))
+        print(f"Imported {len(imported)} new transaction(s)")
 
 
 def main() -> int:
@@ -80,7 +80,7 @@ def main() -> int:
         ing_client.select_account(os.environ["ING_IBAN"])
     except AccountNotFoundException as ex:
         print("Could not find account, is the IBAN correct?")
-        print("Available accounts: %s" % ex.accounts)
+        print(f"Available accounts: {ex.accounts}")
         return 1
 
     ynab_client = YNABClient(
@@ -92,10 +92,10 @@ def main() -> int:
         try:
             ing_to_ynab(ing_client, ynab_client, debug=debug)
         except YNABError as ex:
-            print("Could not import transactions: %s" % ex)
+            print(f"Could not import transactions: {ex}")
         except KeyboardInterrupt:
             raise  # We need to have this case for ^C to work
         except Exception as _e:
-            print("Unexpected error:", sys.exc_info()[0])
-        print("Sleeping for %d seconds" % sleep_interval)
+            print(f"Unexpected error: {sys.exc_info()[0]}")
+        print(f"Sleeping for {sleep_interval} seconds")
         sleep(sleep_interval)
