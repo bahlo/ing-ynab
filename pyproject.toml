@@ -1,6 +1,6 @@
 [project]
 name = "ing-ynab"
-version = "0.3.1"
+version = "3.0.1"
 description = "Import your ING Germany bank statements via FinTS into YNAB."
 authors = [{ name = "Arne Bahlo", email = "hey@arne.me" }]
 dependencies = [
