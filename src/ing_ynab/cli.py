@@ -8,10 +8,9 @@ import logging
 import os
 import sys
 from getpass import getpass
-from dotenv import load_dotenv
 
-from ing_ynab.ynab import YNABClient, YNABError
-from ing_ynab.ing import INGClient, AccountNotFoundException
+from .ynab import YNABClient, YNABError
+from .ing import INGClient, AccountNotFoundException
 
 
 def ing_to_ynab(
@@ -47,8 +46,6 @@ def main() -> int:
     """
     Start the main business logic.
     """
-    load_dotenv()
-
     # Parse environment variables
     debug = os.environ.get("DEBUG") == "1"
     if debug:
