@@ -33,7 +33,7 @@ The configuration is done via environment variables:
 
 - `SLEEP_INTERVAL_SECONDS`: Interval in seconds until the next check happens
   (defaults to 5 minutes).
-- `FINTS_PRODUCT_ID`: Your FinTS product ID (deafults to python-fints one).
+- `FINTS_PRODUCT_ID`: Your FinTS product ID (defaults to python-fints one).
 - `ING_LOGIN`: The login id of your ING account.
 - `ING_IBAN`: The IBAN of the account you want to add.
 - `ING_PIN`: The pin of your ING account (leave empty to be prompted).
@@ -80,7 +80,7 @@ functionality.
 
 The [python-fints](https://github.com/raphaelm/python-fints) library supports
 a lot of banks, so probably. But we need to work together as I can't test it.
-Feel free to get in touch: <hallo@arne.me>
+Feel free to get in touch: <hey@arne.me>
 
 ### How do I register the FinTS product?
 
