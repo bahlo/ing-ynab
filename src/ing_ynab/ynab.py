@@ -104,13 +104,14 @@ class YNABClient:
             )
 
             # If this is a PayPal transaction, try to get the Payee from the memo
-            if PAYPAL_PAYEE_REGEX.match(data["applicant_name"]):
-                payee = PAYPAL_MEMO_REGEX.match(data["purpose"])
-                if payee is not None:
-                    payee = payee.group(2)
-                    if payee.endswith(PAYPAL_SUFFIX):
-                        payee = payee[: -len(PAYPAL_SUFFIX)]
-                    data["applicant_name"] = "PAYPAL " + payee
+            if data["applicant_name"] is not None:
+                if PAYPAL_PAYEE_REGEX.match(data["applicant_name"]) is not None:
+                    payee = PAYPAL_MEMO_REGEX.match(data["purpose"])
+                    if payee is not None:
+                        payee = payee.group(2)
+                        if payee.endswith(PAYPAL_SUFFIX):
+                            payee = payee[: -len(PAYPAL_SUFFIX)]
+                        data["applicant_name"] = "PAYPAL " + payee
 
             transformed.append(
                 {
