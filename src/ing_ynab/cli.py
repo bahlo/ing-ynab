@@ -84,13 +84,11 @@ def main() -> int:
         ynab_access_token, ynab_account_id, ynab_budget_id, flag_color=ynab_flag_color
     )
 
-    # Import new statements into YNAB every n minutes
-    while True:
-        try:
-            ing_to_ynab(ing_client, ynab_client, debug=debug)
-        except YNABError as ex:
-            print(f"Could not import transactions: {ex}")
-        except KeyboardInterrupt:
-            raise  # We need to have this case for ^C to work
-        except Exception as _e:
-            print(f"Unexpected error: {sys.exc_info()[0]}")
+    try:
+        ing_to_ynab(ing_client, ynab_client, debug=debug)
+    except YNABError as ex:
+        print(f"Could not import transactions: {ex}")
+    except KeyboardInterrupt:
+        raise  # We need to have this case for ^C to work
+    except Exception:
+        print(f"Unexpected error: {sys.exc_info()[0]}")
