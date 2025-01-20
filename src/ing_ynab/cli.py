@@ -3,7 +3,6 @@ This module contains the core business logic.
 """
 
 from datetime import date, timedelta
-from time import sleep
 from typing import NoReturn
 import logging
 import os
@@ -66,8 +65,6 @@ def main() -> int:
     ynab_budget_id = os.environ["YNAB_BUDGET_ID"]
     ynab_flag_color = os.environ.get("YNAB_FLAG_COLOR")
 
-    sleep_interval = int(os.environ.get("SLEEP_INTERVAL_SECONDS", "300"))
-
     # Create INGClient
     ing_client = INGClient(
         os.environ["ING_LOGIN"],
@@ -97,5 +94,3 @@ def main() -> int:
             raise  # We need to have this case for ^C to work
         except Exception as _e:
             print(f"Unexpected error: {sys.exc_info()[0]}")
-        print(f"Sleeping for {sleep_interval} seconds")
-        sleep(sleep_interval)

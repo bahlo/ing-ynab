@@ -31,8 +31,6 @@ or `ghcr.io/bahlo/ing-ynab:3.0.1`.
 
 The configuration is done via environment variables:
 
-- `SLEEP_INTERVAL_SECONDS`: Interval in seconds until the next check happens
-  (defaults to 5 minutes).
 - `FINTS_PRODUCT_ID`: Your FinTS product ID (defaults to python-fints one).
 - `ING_LOGIN`: The login id of your ING account.
 - `ING_IBAN`: The IBAN of the account you want to add.
