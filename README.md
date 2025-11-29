@@ -1,3 +1,7 @@
+### :warning: This project has moved to [codeberg.org/enra/ing-ynab](https://codeberg.org/enra/ing-ynab).
+
+----
+
 ![ing-ynab logo](logo.jpg)
 
 [![ci](https://github.com/bahlo/fints_ynab/workflows/ci/badge.svg)](https://github.com/bahlo/ing-ynab/actions?query=workflow%3Aci)
